@@ -1,2 +1,1 @@
-# ㅇ
-## ㄴㅇ
+# FCN (Fully Convolutional Network) for Semantic Segmentation
