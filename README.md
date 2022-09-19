@@ -36,7 +36,8 @@ $$f_{ks} \circ g_{k\prime s\prime} = (f \circ g)_{k\prime + (k-1){s\prime},s{s\p
 ### 3.1 Adapting classifiers for dense prediction
 - LeNet, AlexNet 등 분류모델은 고정된 크기의 input을 받아 위치정보와 관련없는 output을 출력한다. 이런 network의 fully connected layer는 고정된 dimension을 가지며 공간좌표를 무시한다.
 - 이런 fully connected layer는 전체 영역을 커널로 갖는 convolution으로 볼 수도 있다.
-(figure2 삽입)
+- 
+![figure2](https://user-images.githubusercontent.com/59189961/190954586-33d26834-475e-4988-9ab8-4591485be332.PNG)
 
 Furthermore, while the resulting maps are equivalent to the evaluation of the original net on particular input patches, the computation is highly amortized over the overlapping regions of those patches. For example, while AlexNet takes 1.2 ms (on a typical GPU) to infer the classification scores of a 227×227 image, the fully convolutional net takes 22 ms to produce a 10×10 grid of outputs from a 500×500 image, which is more than 5 times faster than the na¨ıve approach.
 
