@@ -58,18 +58,35 @@ Furthermore, while the resulting maps are equivalent to the evaluation of the or
 ### 3.4 Patchwise training is loss sampling
 
 ## 4. Segmentation Architecture
-![figure3](https://user-images.githubusercontent.com/59189961/190954547-d974a646-90e1-4ef1-a039-dafc1cb1e8a1.png)
+
 ### 4.1 From classifier to dense FCN
+- 본 논문 실험에서는 VGG 16-layer net을 사용
+- 마지막 classifying하는 fully connected layer를 1x1 convolutional layer with channel dimension 21로 변경, 해당 layer로 coarse한 출력을 얻는다.
+- deconvolutional layer를 추가해 pixel 단위의 예측으로 bilinearly upsampling한다.
+
+(table1을 넣을까말까)
+vgg가 sota를 달성했다.
 
 ### 4.2 Combining what and where
+- Fully Convolutional net의 구조를 다음과 같이 만들어 출력의 spatial precision을 개선하였다.
 
+![figure3](https://user-images.githubusercontent.com/59189961/190954547-d974a646-90e1-4ef1-a039-dafc1cb1e8a1.png)
+
+- fully convolutionalized classifier가 4.1에서처럼 잘 fine-tune되고 좋은 score를 보이지만 32 pixel stride의 결과를 보면 상당히 거친것을 확인할 수 있다.
 
 ![figure4](https://user-images.githubusercontent.com/59189961/190954570-d019d9d3-8456-4828-8251-d76d886251eb.png)
+
+- 이런 문제를 해결하기 위해 skip connection이라는 구조를 추가했다. final prediction layer를 좀더 미세한 stride를 갖는 lower layer와 결합한다.
+
+
+(6page에서 이어 작성)
+
 
 Figure 3. Our DAG nets learn to combine coarse, high layer information with fine, low layer information. Pooling and prediction layers are
 shown as grids that reveal relative spatial coarseness, while intermediate layers are shown as vertical lines. First row (FCN-32s): Our singlestream net, described in Section 4.1, upsamples stride 32 predictions back to pixels in a single step. Second row (FCN-16s): Combining
 predictions from both the final layer and the pool4 layer, at stride 16, lets our net predict finer details, while retaining high-level semantic
 information. Third row (FCN-8s): Additional predictions from pool3, at stride 8, provide further precision.
+
 
 
 ![result](https://user-images.githubusercontent.com/59189961/190954663-34770038-d507-47a2-9a97-82fc1239aaa0.png)
