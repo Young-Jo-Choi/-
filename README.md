@@ -84,4 +84,3 @@ figure3 첨부
 
 결과
 figure4, result_table
-
