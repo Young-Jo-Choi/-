@@ -64,6 +64,16 @@ Furthermore, while the resulting maps are equivalent to the evaluation of the or
 ### 4.2 Combining what and where
 
 
+![figure4](https://user-images.githubusercontent.com/59189961/190954570-d019d9d3-8456-4828-8251-d76d886251eb.png)
+
+Figure 3. Our DAG nets learn to combine coarse, high layer information with fine, low layer information. Pooling and prediction layers are
+shown as grids that reveal relative spatial coarseness, while intermediate layers are shown as vertical lines. First row (FCN-32s): Our singlestream net, described in Section 4.1, upsamples stride 32 predictions back to pixels in a single step. Second row (FCN-16s): Combining
+predictions from both the final layer and the pool4 layer, at stride 16, lets our net predict finer details, while retaining high-level semantic
+information. Third row (FCN-8s): Additional predictions from pool3, at stride 8, provide further precision.
+
+
+![result](https://user-images.githubusercontent.com/59189961/190954663-34770038-d507-47a2-9a97-82fc1239aaa0.png)
+
 어떤 방법을 사용했는지 등등
 기존 연구와의 차이점은 무엇인지
 
