@@ -1,19 +1,19 @@
 # FCN (Fully Convolutional Network) for Semantic Segmentation
 
-## Abstract
+## 1. Abstract
 - arbitrary한 input size를 받고 그에 상응하는 크기의 output을 출력하도록 하였음
 - AlexNet, VGG, GoogLeNet과 같은 classification model을 fine-tuning해 해당 모델이 사전 학습한 representation 능력을 가져오도록 하였음
 - skip architecture라는 것을 정의해 의미(semantic) 정보와 위치(appearance) 정보를 결합하도록 하였음
 - PASCAL VOC, NYUDv2, SIFT Flow 등에 대해 당시 기준 sota를 달성하였고, 일반적인 이미지 추론은 1/5초도 걸리지 않는 성과를 보임
 
-## Introduction
+## 2. Introduction
 
 (patchwise가 아니라는 내용 추가 필요 -> upsampling 부분 포함)
 (Fully convolutional versions of existing networks predict dense outputs from arbitrary-sized inputs. Both learning and inference are performed whole-image-ata-time by dense feedforward computation and backpropagation. In-network upsampling layers enable pixelwise prediction and learning in nets with subsampled pooling.)
 
 (intorduction은 생략해도 될지도??)
 
-## Fully convolutional network
+## 3. Fully convolutional network
 
 기존 CNN - encoder (feature extraction) + fully connected layer
 (개고양이 분류 구조 사진 첨부)
@@ -28,6 +28,39 @@ $$y_{ij} : \text{location (i,j) of following layer}$$
 $$k : \text{kernel size}$$
 $$s : \text{stride or subsampling factor}$$
 $f_{ks}$는 layer의 type을 결정하는 함수이다.
+
+$$f_{ks} \circ g_{k\prime s\prime} = (f \circ g)_{k\prime + (k-1){s\prime},s{s\prime}} $$
+
+(어쩌구 저쩌구)
+
+### 3.1 Adapting classifiers for dense prediction
+- LeNet, AlexNet 등 분류모델은 고정된 크기의 input을 받아 위치정보와 관련없는 output을 출력한다. 이런 network의 fully connected layer는 고정된 dimension을 가지며 공간좌표를 무시한다.
+- 이런 fully connected layer는 전체 영역을 커널로 갖는 convolution으로 볼 수도 있다.
+(figure2 삽입)
+
+Furthermore, while the resulting maps are equivalent to the evaluation of the original net on particular input patches, the computation is highly amortized over the overlapping regions of those patches. For example, while AlexNet takes 1.2 ms (on a typical GPU) to infer the classification scores of a 227×227 image, the fully convolutional net takes 22 ms to produce a 10×10 grid of outputs from a 500×500 image, which is more than 5 times faster than the na¨ıve approach.
+
+이런 spatial한 output map은 semantic segmantation과 같은 dense한 문제에 대해 대처할 수 있다. 모든 cell에 대해 갖고 있는 ground truth에 대해 forward와 backward 모두 간단하게 진행되며 convolution 고유의 계산 효율성을 활용한다. AlexNet의 경우 해당 backward 연산의 경우 단일 이미지의 경우 2.4ms, fully convolution 10x10 출력맵의 ruddn 37ms이며, 이는 forawrd pass와 유사한 속도향상을 초래한다.(위 번역안된 부분에 이어지는 내용임)
+
+분류 네트워크를 fullt convolution으로 재해석하면 모든 크기의 input에 대해 output map이 산출되지만, 출력 차원은 일반적으로 샘플링에 의해 감소하고 coarse한 정보를 담게 된다.(receptive field의 pixel strice와 동일한 요소만큼의 크기로 줄임)
+
+### 3.2 Shift-and-strich is filter rarefaction
+
+
+### 3.3 Upsampling is backwards strided convolution
+- coarse한 output과 dense한 pixel 사이를 이어주기 위해서는 interpolation을 수행해야한다. simple bilinear interpolation은 input cell과 output cell의 상대적인 위치에 의존하는 선형 맵에 의해 가장 근접한 4개의 입력으로부터 각 출력 $y_{ij}$을 계산한다.
+
+- transposed convolution, backward convolution, deconvolution
+- 코드에 들어있는 그림 참조
+- deconvolution layer가 여러개 쌓이면 nonlinear upsampling으로 기능할 수 있다.
+
+### 3.4 Patchwise training is loss sampling
+
+## 4. Segmentation Architecture
+(figure3 삽입)
+### 4.1 From classifier to dense FCN
+
+### 4.2 Combining what and where
 
 
 어떤 방법을 사용했는지 등등
