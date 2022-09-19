@@ -57,7 +57,7 @@ Furthermore, while the resulting maps are equivalent to the evaluation of the or
 ### 3.4 Patchwise training is loss sampling
 
 ## 4. Segmentation Architecture
-(figure3 삽입)
+![figure3](https://user-images.githubusercontent.com/59189961/190954547-d974a646-90e1-4ef1-a039-dafc1cb1e8a1.png)
 ### 4.1 From classifier to dense FCN
 
 ### 4.2 Combining what and where
