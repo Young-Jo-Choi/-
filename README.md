@@ -77,15 +77,15 @@ vgg가 sota를 달성했다.
 ![figure4](https://user-images.githubusercontent.com/59189961/190954570-d019d9d3-8456-4828-8251-d76d886251eb.png)
 
 - 이런 문제를 해결하기 위해 skip connection이라는 구조를 추가했다. final prediction layer를 좀더 미세한 stride를 갖는 lower layer와 결합한다.
+- fine layer와 coarse layer를 결합하면 각 픽셀 단위의 예측과 더불어서 위치 정보에 대한 예측을 함께 하도록 만들 수 있다.
+
+- pool4에서 얻어지는 
 
 
 (6page에서 이어 작성)
 
 
-Figure 3. Our DAG nets learn to combine coarse, high layer information with fine, low layer information. Pooling and prediction layers are
-shown as grids that reveal relative spatial coarseness, while intermediate layers are shown as vertical lines. First row (FCN-32s): Our singlestream net, described in Section 4.1, upsamples stride 32 predictions back to pixels in a single step. Second row (FCN-16s): Combining
-predictions from both the final layer and the pool4 layer, at stride 16, lets our net predict finer details, while retaining high-level semantic
-information. Third row (FCN-8s): Additional predictions from pool3, at stride 8, provide further precision.
+Figure 3. Our DAG nets learn to combine coarse, high layer information with fine, low layer information. Pooling and prediction layers are shown as grids that reveal relative spatial coarseness, while intermediate layers are shown as vertical lines. First row (FCN-32s): Our singlestream net, described in Section 4.1, upsamples stride 32 predictions back to pixels in a single step. Second row (FCN-16s): Combining predictions from both the final layer and the pool4 layer, at stride 16, lets our net predict finer details, while retaining high-level semantic information. Third row (FCN-8s): Additional predictions from pool3, at stride 8, provide further precision.
 
 
 
