@@ -70,6 +70,14 @@ pool5 계층의 출력에 2 $\times$ upsample만을 취한 후 pool4의 출력�
 - 더 previous한 층과 skip connection할 수록 위치정보까지 포함해 잘 예측하는 것을 확인할 수 있다.
 - fine layer와 coarse layer를 결합하면 각 픽셀 단위의 예측과 더불어서 위치 정보에 대한 예측을 함께 하도록 만들 수 있다.
 
+![result_table](https://user-images.githubusercontent.com/59189961/191522754-6160d066-bf8a-4bb5-8600-0fd31782b560.jpg)
+
+- pixel acc : $\sum_{i}n_{ii}/\sum_{i}t_{i}$
+- mean acc : $(1/n_{cl})\sum_{i}n_{ii}/t_i$
+- mean IU : $(1/n_{cl})\sum_{i}n_{ii}/(t_i + \sum_{j}n_{ji}-n{ii})$
+- frequency weighted IU : ${(\sum_{k}t_k)}^{-1}\sum_{i}t_{i}n_{ii}/(t_i + \sum_{j}n_{ji}-n{ii})$
+
+
 
 ![result](https://user-images.githubusercontent.com/59189961/190954663-34770038-d507-47a2-9a97-82fc1239aaa0.png)
 
