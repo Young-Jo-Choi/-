@@ -1,6 +1,6 @@
 # Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization
 논문 : https://arxiv.org/pdf/1610.02391.pdf <br>
-Abstract We propose a technique for producing ‘visual explanations’ for decisions from a large class of Convolutional Neural Network (CNN)-based models, making them more transparent and explainable.
+$\mathbf{ Abstract}$ : We propose a technique for producing ‘visual explanations’ for decisions from a large class of Convolutional Neural Network (CNN)-based models, making them more transparent and explainable.
 
 ![gradcam1](https://user-images.githubusercontent.com/59189961/227709603-27a562fe-d456-4610-bb07-61309de2d129.jpg)
 
