@@ -2,7 +2,8 @@
 논문 : https://arxiv.org/pdf/1610.02391.pdf
 
 ## CNN
-(이미지 : CNN)<br>
+![CNN구조](https://user-images.githubusercontent.com/59189961/227709601-486e22c3-d060-461b-8226-745fd57a73ab.JPG)
+
 대충 설명<br>
 
 ## CAM
@@ -10,13 +11,15 @@
 - 일반 CNN architecture의 output만으로는 분류 결과에 대한 모델이 어디를 주목하는지 알 수가 없다.
 - 보통의 deep learning 구조는 내부 parameter를 일일히 확인하기 어려운 black box 구조이기 때문에 모델 해석의 관점에서 어려움이 따른다.
 
-(이미지 : feature maps)<br>
+![feature_maps](https://user-images.githubusercontent.com/59189961/227709602-e6bc05cd-db2e-4bc7-8350-83dcee5852ac.jpg)
+
 <- low level feature maps | high level feature maps -><br>
 - layer가 얕을 수록 low-level feature를 읽는다.
 - layer가 깊어질 수록 조금 더 고차원적인 특징(class specific하도록 semantic한 정보)을 포착한다.
 - 때문에 last layer의 activation map에 주목하여 model이 실제 주목하는 영역을 살펴볼 수 있다.
 
-(이미지 : CAM)
+![CAM](https://user-images.githubusercontent.com/59189961/227709594-6b5519a9-1e2d-4068-9c07-e9598487f76d.jpg)
+
 - 대충 global average pooling (channel별로 하나의 값을 뽑아내기 위해)
 - 대충 fintuning
 - 대충 weight 획득
@@ -40,7 +43,7 @@ $$M_{c}(x,y) = \sum_k w_k^c f_{k}(x,y)$$
 - 이때 model에 흐르는 gradients를 다시 활성화 시키기 위해 backpropagation 연산을 수행한다.
 - image classification 뿐 아니라, image captioning, visual question answering (VQA) 등 gradients가 흐르는 구조라면 어디에든 적용해볼 수 있다.
 
-(이미지 : gradcam구조)
+![gradcam구조](https://user-images.githubusercontent.com/59189961/227709607-c4e8ba68-ac5d-4a7f-8e34-a739d1b8ed52.jpg)
 
 ## 수식
 - CAM의 방법보다 Grad-CAM의 방법이 더 효율적이지만 두 방법의 visual explanation이 약간 차이가 있을 수 있지 않을까 의문이 생길 수 있다. 그러나 두 방법이 사실 수식적으로 동일하다는 것은 이미 다음과 같이 증명되었다.
@@ -76,5 +79,7 @@ $$w_k^c = \sum_i \sum_j {{\partial}Y^c \over {\partial A_{ij}^k}}$$
 $$a_k^c = {1 \over Z}\sum_i \sum_j - {\partial y^c \over \partial A_{ij}^k}$$
 
 ## 활용
-(이미지 : gradcam1)<br>
-(이미지 : gradcam2)
+![gradcam1](https://user-images.githubusercontent.com/59189961/227709603-27a562fe-d456-4610-bb07-61309de2d129.jpg)
+
+![gradcam2](https://user-images.githubusercontent.com/59189961/227709605-c6b583c5-832e-4de6-b908-95a5641553c2.jpg)
+
