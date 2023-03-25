@@ -164,12 +164,12 @@ $$
 
 ## Diagnosing image classification CNNs with Grad-CAM
 ### Analyzing failure modes for VGG-16
-(이미지 : failure)
+![failure analyze](https://user-images.githubusercontent.com/59189961/227725586-abc3d45d-c2ce-4ee6-8840-db8fa6468fbd.JPG)
 
-- 예측에 실해한 이미지만 보고 사람의 눈으로 원인분석하기는 쉽지 않지만 Guided Grad-CAM으로 visualize함으로써 모델이 이미지를 어떻게 바라봤는지 확인할 수 있다.
+- 예측에 실패한 이미지만 보고 사람의 눈으로 원인분석하기는 쉽지 않지만 Guided Grad-CAM으로 visualize함으로써 모델이 이미지를 어떻게 바라봤는지 확인할 수 있다.
 
 ### Effect of adversarial noise on VGG-16
-(이미지 : adversarial)
+![adversarial noise](https://user-images.githubusercontent.com/59189961/227725588-cfa64e32-d1de-4263-86d2-d2278a384a4a.JPG)
 
 - 이미지에 없는 Airliner에는 높은 확률(>0.9999)을 할당하고 실제 존재하는 dog와 cat에는 낮은 확률을 할당하도록 pretrained된 VGG-16 모델에 대해 Grad-CAM을 visualize한 결과가 그림과 같다.
 - 모델이 cat과 dog가 존재하지 않는다는 것을 거의 확신하고 있음에도 Grad-CAM은 이 범주를 거의 정확하게 포착해낼 수 있다. 이는 Grad-CAM이 adversarial noise에 강하다는 것을 보여준다.
@@ -184,3 +184,8 @@ $$
 - unbiased model의 Grad-CAM 결과를 확인해보면 간호사의 경우 상의의 짧은 소매, 의사의 경우 청진기와 상의의 긴 소매에 주목하여 예측하는 것을 확인하였다.
 
 ## Conclusion
+- 해당 연구에서는 CNN 기반 모델을 더 transparent하게 만들기 위한 class-discriminative localization 기술인 gradient기반 clss activation mapping을 제안하였다.
+- 또한 Grad-CAM localization을 기존의 high resolution visualization 기술과 결합하여 Guided Grad-CAM visualization하였다.
+- 클래스를 더 정확하게 구별하고 모델의 신뢰성을 더 잘 드러낼 수 있으며, 데이터 세트에 존재할지 모르는 bias를 식별하는데에 도움이 될 수 있다.
+- We believe that a true AI system should not only be intelligent, but also be able to reason about its beliefs and actions for humans to trust and use it.
+
