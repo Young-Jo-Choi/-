@@ -155,23 +155,29 @@ $$
 \end{align*}$$
 
 ### Guided Grad-CAM
-(이미지 첨부 : guided_gradcam)
+![guided_gradcam](https://user-images.githubusercontent.com/59189961/227724134-4e5aabbb-5a4d-4eaf-b033-81136a0f3ac3.jpg)
 
-- Grad-CAM이 class마다의 image의 영역을 나타내기는 하지만 왜 해당 클래스로 예측했는지와 같은 세부 사항을 highlight하는 능력은 부족하다.
-- Guided BackPropagation은 ReLU 계층을 통해 음의 gradients가 억제되는 이미지와 관련해 gradient를 시각화한다. 즉 neuron이 억제하는 pixel이 아닌 neuron에 의해 발견되는 pixel을 잡아내는 것을 목표로 한다.
-
-### Counterfactual Explanations
-
-$$\Rightarrow a_k^c = {1 \over Z}\sum_i \sum_j - {\partial y^c \over \partial A_{ij}^k} \\ $$
-
+- Guided BackPropagation은 ReLU 계층을 통해 음의 gradients가 억제되는 이미지와 관련해 gradient를 시각화한다. 즉 neuron이 억제하는 pixel이 아닌 neuron에 의해 발견되는 pixel을 잡아내는 것을 목표로 한다. (좌측 열) --> high-resolution이 목표
+- Grad-CAM이 class마다의 image의 영역을 나타내기는 하지만 왜 해당 클래스로 예측했는지와 같은 세부 사항을 highlight하는 능력은 부족하다. 즉 가운데 열의 이미지를 보면 highlight되는 영역이 확인은 가능하지만 왜 'cat'과 'dog'가 되는지에 대한 정보는 불확실하다. (가운데 열) --> class-discriminative가 목표
+- 때문에 Guided Backpropagation과 Grad-CAM을 element-wise muliplication하여 섞어 두가지의 best한 측면을 결합한다. (우측 열) <br>이때 element-wise하게 결합하여는 두 결과의 size가 맞지 않을 수 있는데 Grad-CAM의 결과인 $L_{Grad-CAM}^c$를 bilinear interpolation하여 upsampling하여 사이즈를 맞춘다. <br>(구조는 최상단 그림 참조)
 
 
 ## Diagnosing image classification CNNs with Grad-CAM
+### Analyzing failure modes for VGG-16
+(이미지 : failure)
+
+- 예측에 실해한 이미지만 보고 사람의 눈으로 원인분석하기는 쉽지 않지만 Guided Grad-CAM으로 visualize함으로써 모델이 이미지를 어떻게 바라봤는지 확인할 수 있다.
+
+### Effect of adversarial noise on VGG-16
+(이미지 : adversarial)
+
+- 이미지에 없는 Airliner에는 높은 확률(>0.9999)을 할당하고 실제 존재하는 dog와 cat에는 낮은 확률을 할당하도록 pretrained된 VGG-16 모델에 대해 Grad-CAM을 visualize한 결과가 그림과 같다.
+- 모델이 cat과 dog가 존재하지 않는다는 것을 거의 확신하고 있음에도 Grad-CAM은 이 범주를 거의 정확하게 포착해낼 수 있다. 이는 Grad-CAM이 adversarial noise에 강하다는 것을 보여준다.
 
 ### Identifying bias in dataset
 
 ![gradcam2](https://user-images.githubusercontent.com/59189961/227709605-c6b583c5-832e-4de6-b908-95a5641553c2.jpg)
-- 간호사 이미지와 의사 이미지에 대해 두번째 열에서 모델이 둘다 간호사로 분류하였다. 간호사는 올바른 분류를 하였지만 의사의 경우 틀린 예측을 하였다. 
+- 간호사 이미지와 의사 이미지에 대해 두번째 열에서 모델이 둘다 간호사로 분류하였다. 간호사는 올바른 분류를 하였지만 의사의 경우 틀린 예측을 하였다. <br>(여기서의 모델은 VGG-16을 기반으로 의사와 간호사만 구분하도록 binary classification task로 finetune된 모델이다.)
 - 오분류에 대한 원인을 분석하고자 Grad-CAM을 이미지를 찍었고 모델이 머리카락을 주로 봤다는 것을 확인하였다. 즉 여자인 것을 모델이 확인하고 실제 의사임에도 간호사로 예측하였다.
 - 학습시킨 데이터셋의 구성을 살펴보니 의사의 경우 78%가 남자의사로 되어있고, 간호사의 경우 93%가 여자로 되어있었다.
 - 이에 남자 간호사와 여자 의사 이미지를 추가하여 모델을 재학습시켰고 모델이 예측을 올바로 수행하였다. 
