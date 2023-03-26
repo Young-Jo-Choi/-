@@ -29,8 +29,8 @@ $\mathbf{ Abstract}$ : We propose a technique for producing ‘visual explanatio
 ![CAM](https://user-images.githubusercontent.com/59189961/227709594-6b5519a9-1e2d-4068-9c07-e9598487f76d.jpg)
 
 - 하나의 이미지로부터 얻어지는 last convolution layer의 activation map은 여러 channel이 쌓여있는 3D array이다. (channel 별로 2D image) 이때 channel별로 가중치(weights)를 구해서 각각의 2D image를 가중합하여 얻어지는 image를 각 input image에서 얻어지는 최종 결과물로 하겠다는 것이 아이디어.
-- last convolution layer의 output map을 global average pooling하여 channel별로 하나의 값을 얻는다. (gloal average pooling은 2D image 전체를 단순 평균한다는 뜻) 이때 channel 개수만큼으로 얻어진 vector로 output node를 예측할 수 있도록 finetuning을 하고 각 node를 잇는 weight값들이 계산된다.
-- predicted된 node(class)로 연결된 weight들을 각각 channel의 가중치로 취급하여 모든 channel의 이미지를 가중합한 것을 해당 class에 대한 CAM으로 하여 visualization한다.
+   - last convolution layer의 output map을 global average pooling하여 channel별로 하나의 값을 얻는다. (gloal average pooling은 2D image 전체를 단순 평균한다는 뜻) 이때 channel 개수만큼으로 얻어진 vector로 output node를 예측할 수 있도록 finetuning을 하고 각 node를 잇는 weight값들이 계산된다.
+   - predicted된 node(class)로 연결된 weight들을 각각 channel의 가중치로 취급하여 모든 channel의 이미지를 가중합한 것을 해당 class에 대한 CAM으로 하여 visualization한다.
 
 $$ 
 \begin{align*}
