@@ -150,7 +150,7 @@ $$
 & \sum_i \sum_j w_k^c = \sum_i \sum_j Z \cdot {{\partial}Y^c \over {\partial A_{ij}^k}} \\
 & \rightarrow Zw_k^c = Z \sum_i \sum_j {{\partial}Y^c \over {\partial A_{ij}^k}} \\
 & \Rightarrow w_k^c = \sum_i \sum_j {{\partial}Y^c \over {\partial A_{ij}^k}} \\
-& \text{Up to a proportionality constant } {1 over Z} \text{ that gets normalized out during visualization,} \\
+& \text{Up to a proportionality constant } {1 \over Z} \text{ that gets normalized out during visualization,} \\
 & \text{the expression for } w_k^c \text{ is identical to } a_k^c \text{used by Crad-CAM} \\
 \end{align*}$$
 
