@@ -96,7 +96,7 @@ $$
 \end{align*}
 $$
 
-- class 예측에 긍정적인 영향을 미치는 픽셀에만 관심이 있기 때문에 linear combination 이후 ReLU를 적용한다. 음수 픽셀은 다른 class에 속할 가능성이 높으며 ReLU를 하지 ㅇ낳을 경우 원하는 class 외의 것을 highlight하여 더 나쁜 성향을 보이는 것을 확인했다.
+- class 예측에 긍정적인 영향을 미치는 픽셀에만 관심이 있기 때문에 linear combination 이후 ReLU를 적용한다. 음수 픽셀은 다른 class에 속할 가능성이 높으며 ReLU를 하지 않을 경우 원하는 class 외의 것을 highlight하여 더 나쁜 성향을 보이는 것을 확인했다.
 
 
 
