@@ -184,7 +184,7 @@ $$
 - unbiased model의 Grad-CAM 결과를 확인해보면 간호사의 경우 상의의 짧은 소매, 의사의 경우 청진기와 상의의 긴 소매에 주목하여 예측하는 것을 확인하였다.
 
 ## Conclusion
-- 해당 연구에서는 CNN 기반 모델을 더 transparent하게 만들기 위한 class-discriminative localization 기술인 gradient기반 class activation mapping을 제안하였다.
+- 해당 연구에서는 CNN 기반 모델을 더 transparent하게 만들기 위한 class-discriminative localization 기술인 gradient기반 clss activation mapping을 제안하였다.
 - 또한 Grad-CAM localization을 기존의 high resolution visualization 기술과 결합하여 Guided Grad-CAM visualization하였다.
 - 클래스를 더 정확하게 구별하고 모델의 신뢰성을 더 잘 드러낼 수 있으며, 데이터 세트에 존재할지 모르는 bias를 식별하는데에 도움이 될 수 있다.
 - We believe that a true AI system should not only be intelligent, but also be able to reason about its beliefs and actions for humans to trust and use it.
