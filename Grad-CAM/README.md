@@ -67,7 +67,7 @@ $$M_{c}(x,y) = \sum_k w_k^c f_{k}(x,y)$$
 
 ![gradcam구조](https://user-images.githubusercontent.com/59189961/227709607-c4e8ba68-ac5d-4a7f-8e34-a739d1b8ed52.jpg)
 
-- 예측된 class를 c라고 할 때 class c로 예측하기 위한 score값을 $y_c$라고 한다. 이 y_c를 원하는 feature map(보통은 마지막 convolution layer)까지 backpropagation을 한다.
+- 예측된 class를 c라고 할 때 class c로 예측하기 위한 score값을 $y_c$라고 한다. 이 $y_c$를 원하는 feature map(보통은 마지막 convolution layer)까지 backpropagation을 한다.
 - backprop된 gradient는 feature map과 동일한 size로 생성된다. (feature map의 채널별 모든 pixel이 output 예측에 어떤 영향을 미쳤는지 나타내는 것이기 때문)
 - 이 gradient를 channel-wise하게 평균한다. 그러면 channel 개수와 동일한 output이 나오고 이를 가중치 삼아 feature map을 channel별로 가중평균한다.
 
@@ -91,7 +91,7 @@ $$L_{Grad-CAM}^c = ReLU\underbrace{(\sum_k a_k^c A^k)}_{(3)}$$
 
 $$
 \begin{align*}
-& \text (3) : linear combination\\
+& \text{(3) : linear combination}\\
 & \text{results in a Grad-CAM image (=coarse heatmap) which has same size as the convolutional feature maps} \\
 \end{align*}
 $$
