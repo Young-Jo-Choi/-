@@ -14,7 +14,7 @@ $\mathbf{ Abstract}$ : We propose a technique for producing ‘visual explanatio
 - 이를 위해 Convolution layer를 통해 image의 특징을 추출한 뒤 이미지를 1차원으로 vector로 재구성(Embedding, Representation)하고 이를 fully connected layer에 넣어 분류를 수행한다.
  
 
-## CAM: Class Activation Maaping
+## CAM: Class Activation Maping
 논문 : Learning Deep Features for Discriminative Localization.<br>
 - 일반 CNN architecture의 output만으로는 분류 결과에 대한 모델이 어디를 주목하는지 알 수가 없다.
 - 보통의 deep learning은 내부 parameter를 일일히 확인하기 어려운 black box 구조이기 때문에 모델 해석의 관점에서 어려움이 따른다.
