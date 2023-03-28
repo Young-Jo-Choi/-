@@ -76,7 +76,7 @@ $${a_k}^c = \overbrace{{1 \over Z} \sum_{i}\sum_{j}}^{\text{(1)}} \underbrace{{{
 
 $$
 \begin{align*}
-& A^k \text{ k-th channel of feature map } a_k^c \\
+& A^k \text{ : k-th channel of feature map } \\
 & a_k^c \text { : } A_k \text {가 전체적인 feature map에서 c를 예측하는데 어느정도 영향을 미쳤는가에 대한 가중치} \\
 & \text{(1) : global average pooling} \\
 & \text{(2) : gradients via backprop : } A_k \text{의 각 pixel들이 c를 예측하는데 있어 얼마나 유효한가에 대한 값} \\
