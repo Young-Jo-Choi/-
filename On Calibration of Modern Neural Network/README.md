@@ -33,15 +33,39 @@ $$
 \end{align*}
 $$
 
-$$$$
+We would like the confidence estimate $\hat{P}$ to be calibrated, which intuitively means that $\hat{P}$ representats a true probability.<br>
+(For example, given 100 predictions, each with confidence of 0.8, we expect that 80 should be correctly classified)
+
+
 
 $$
 \begin{align*}
-& \text{Perfect Calibration : } \mathbb{P}(\mathcal{Y} = Y|\mathcal{P} = p) = p, \forall{p} \in [0,1] \\
+& \textbf{Perfect Calibration : } \mathbb{P}(\mathcal{Y} = Y|\mathcal{P} = p) = p,  \text{    } \forall{p} \in [0,1]        - (1)\\
 \end{align*}
 $$
 
-ECE, MCE
+위 정의에서 $\hat{P}$가 continuous random variable이므로 probability는 유한개의 많은 샘플들로 계산될 수 없다. 그렇기 때문에 위 식의 의미를 최대한 포착하는 empirical approximation이 필요하다.
+
+### Reliability Diagrams
+= visual representation of model calibration. 
+
+expected sample accuracy를 confidence의 function으로 그리게 된다. finite한 sample로부터 expected accuracy를 추정하기 위해 prediction을 M개의 interval로 그룹화하여 각 bin에서 accuracy를 계산한다.
+
+$$
+\begin{align*}
+& \text{Let }B_m \text{ be the set of indices of samples whose prediction confidence falls into the interval }I_m=({{m-1} \over {M}},{m \over M}].  \\
+& acc(B_m) = {1 \over |B_m|} \sum_{i \in B_m} \textbf{1} (\hat y_{i} = y_i) \leftarrow\text{approximation of left-hand of (1)}\\
+& conf(B_m) = {1 \over |B_m|} \sum_{i \in B_m} \hat p_i \leftarrow\text{approximation of right-hand of (1)} \\
+\end{align*}
+$$
+
+그러므로 perfect calibrated model은 모든 $m \in {1,...,M}$에 대해 $acc(B_m) = conf(B_m)$인 상태를 갖는다. 단 reliablity diagram은 주어진 bin에 있는 표본의 비율이 나타나지 않으므로 calibrated된 표본의 수를 추정하는데에는 사용할 수 없다.
+
+
+
+### ECE (Expected Calibration Error)
+
+### MCE (Maximum Calibration Error)
 
 ## Oberserving Miscalibration
 - Model capacity
