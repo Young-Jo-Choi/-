@@ -49,7 +49,7 @@ $$
 ### Reliability Diagrams
 = visual representation of model calibration. 
 
-expected sample accuracy를 confidence의 function으로 그리게 된다. finite한 sample로부터 expected accuracy를 추정하기 위해 prediction을 M개의 interval로 그룹화하여 각 bin에서 accuracy를 계산한다.
+expected sample accuracy를 confidence의 function으로 그리게 된다. finite한 sample로부터 expected accuracy를 추정하기 위해 prediction을 M개의 interval로 그룹화하여 각 bin에서 accuracy를 계산한다.<br><br>
 
 $$
 \begin{align*}
@@ -59,12 +59,19 @@ $$
 \end{align*}
 $$
 
-그러므로 perfect calibrated model은 모든 $m \in {1,...,M}$에 대해 $acc(B_m) = conf(B_m)$인 상태를 갖는다. 단 reliablity diagram은 주어진 bin에 있는 표본의 비율이 나타나지 않으므로 calibrated된 표본의 수를 추정하는데에는 사용할 수 없다.
-
+<br>그러므로 perfect calibrated model은 모든 $m \in {1,...,M}$에 대해 $acc(B_m) = conf(B_m)$인 상태를 갖는다. 단 reliablity diagram은 주어진 bin에 있는 표본의 비율이 나타나지 않으므로 calibrated된 표본의 수를 추정하는데에는 사용할 수 없다.
 
 
 ### ECE (Expected Calibration Error)
+reliablity diagram은 calibration이 얼마나 잘되었는지를 확인할 수 있는 유용한 툴이지만 scalar 값으로 statistic of calibration을 summary하여 표현하는 것 역시 필요하다. miscalibration을 표현하는 한 가지 방법은 confidence와 accuracy의 차이의 기대값을 구하는 것이다.
 
+$$
+\begin{align*}
+& ECE \\
+& = \mathbb E_{\hat P} [|\mathbb P (\hat Y = Y | \hat P = P) - p|] \\
+& = \sum_{m=1}^M {|B_m| \over n} {|acc(B_m) - conf(B_m)|} \\
+\end{align*}
+$$
 ### MCE (Maximum Calibration Error)
 
 ## Oberserving Miscalibration
