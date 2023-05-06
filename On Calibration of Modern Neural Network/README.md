@@ -63,7 +63,6 @@ $$
 
 <br>그러므로 perfect calibrated model은 모든 $m \in {1,...,M}$에 대해 $acc(B_m) = conf(B_m)$인 상태를 갖는다. 단 reliablity diagram은 주어진 bin에 있는 표본의 비율이 나타나지 않으므로 calibrated된 표본의 수를 추정하는데에는 사용할 수 없다.
 
-
 ### ECE (Expected Calibration Error)
 reliablity diagram은 calibration이 얼마나 잘되었는지를 확인할 수 있는 유용한 툴이지만 scalar 값으로 statistic of calibration을 summary하여 표현하는 것 역시 필요하다. miscalibration을 표현하는 한 가지 방법은 confidence와 accuracy의 차이의 기대값을 구하는 것이다.
 
@@ -95,9 +94,9 @@ $$
   - network의 depth와 width가 증가하면 classification error는 감소하는 반면 model calibration에는 부정적인 영향을 미친다.
 - Batch Normalization
   - batch normalization은 별도로 정규화할 필요성을 줄여주고, 어떤 케이스에서는 모델 정확도를 올리기도 한다.
-  - 다만 batch normalization과 함께 학습된 모델은 더 miscalibrated하는 경향이 있다. (learning rate같은 hyperparameter와는 관계없)
+  - 다만 batch normalization과 함께 학습된 모델은 더 miscalibrated하는 경향이 있다. (learning rate같은 hyperparameter와는 관계없음)
 - Weight decay
-  - less weight decay가 calibration에 부정적인 영향을 미치는 사실을 발
+  - less weight decay가 calibration에 부정적인 영향을 미치는 사실을 발견하였다.
 
 
 ![캡쳐1](https://user-images.githubusercontent.com/59189961/236619534-a24ee39c-8831-42d6-8ff7-1ca7fd44fcff.png)
@@ -113,9 +112,27 @@ $$
 다음 제시되는 방법들은 모두 calibrated probability를 만들어내는 post-processing step이다.<br>
 다음 방법들을 적용함에 있어서 hold-out validation set를 필요로 한다.
 
+
+
 ### For Binary
-- Histogram binning
-- Isotonic regression
+**goal** : produce a calibrated probability $\hat{q}\_i$ based on $y_i$, $\hat{p}\_i$ and $z_i$ ( $\hat{p}\_i$ = $\sigma (z_i)$ )
+- Histogram binning : non-parametric calibration method
+  - uncalibrated predictions $\hat{p}\_i$를 mutually exclusive한 bins $B_1,...,B_M$로 구간화한다.
+  - 각각의 bin은 calibrated score $\{theta}\_m$가 할당된다. (i.e. if $\hat{p}\_i$ is assigned to bin $B_m$, then $\hat{q}\_i = \{theta}\_m$
+  - bin boundaries : $0=a_i \le a_2 \le ... \le a_{M+1} = 1$, where the bin $B_m$ is defined by interval $(a_m, a_{m+1}]$ <br> bin boundary들은 같은 length를 갖거나 같은 샘플의 수를 갖도록 선택됨
+  - prediction $\theta_i$ are chosen to minimize the bin-wise squared loss : $\min\limits_{\theta_1,...,\theta_M} \sum_{m=1}^M \sum_{i=1}\^n \textbf{1}(a_m \le \hat{p}\_i \le a_{m+1}){(\theta_m - y_i)}^2$
+  - the solution results in $\theta_m$ that correspond to the average numbr of positive-class samples in bin $B_m$
+- Isotonic regression : non-parametric calibration method
+  - uncalibrated output을 변환시켜주는 piesewise constant function $f$를 학습한다. (i.e. $\hat{q}\_i = f(\hat{p}\_i)$ )
+  
+$$
+\begin{align*}
+& \min\limits_{\substack{\theta_1,...,\theta_M} \\ {a_1,...,a_M+1}} \sum_{m=1}^M \sum_{i=1}\^n \textbf{1}(a_m \le \hat{p}\_i \le a_{m+1}){(\theta_m - y_i)}^2 \\
+\text{subject to } &0=a_1 \le a_2 \le ... \le a_{M+1} = 1, \\
+&\theta_1 \le \theta_2 \le ... \le \theta_{M+1} = 1
+\end{align*}
+$$
+
 - Bayesian Binning into Quantiles (BBQ)
 - Plat scailing
 
