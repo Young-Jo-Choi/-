@@ -114,7 +114,7 @@ $\bullet \mathbf{ first}$
 
 $$
 \begin{align*}
-& Y^c = \sum_k \underbrace{w_k^c}_{(4)} \overbrace{{1 \over Z}}^{(5)} \sum_i \sum_k \underbrace{A_{ij}^k}_{(6)}\\
+& Y^c = \sum_k \underbrace {w_k^c}\_{(4)} \overbrace {1 \over Z}^{(5)} \sum_i \sum_k \underbrace {A_{ij}^k}\_{(6)} \\
 & \text{(4) : class feature weights}\\
 & \text{(5) : global average pooling}\\
 & \text{(6) : feature map}\\
