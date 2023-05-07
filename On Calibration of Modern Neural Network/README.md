@@ -119,8 +119,9 @@ $$
 - Histogram binning : non-parametric calibration method
   - uncalibrated predictions $\hat{p}\_i$를 mutually exclusive한 bins $B_1,...,B_M$로 구간화한다.
   - 각각의 bin은 calibrated score $\{theta}\_m$가 할당된다. (i.e. if $\hat{p}\_i$ is assigned to bin $B_m$, then $\hat{q}\_i = \{theta}\_m$
+  - test 단계에서 prediction $\hat{p}\_{te}$가 bin $B_m$에 할당되면 calibrated prediction $\hat{q}\_{te}$가 $\theta_m$이 된다.
   - bin boundaries : $0=a_i \le a_2 \le ... \le a_{M+1} = 1$, where the bin $B_m$ is defined by interval $(a_m, a_{m+1}]$ <br> bin boundary들은 같은 length를 갖거나 같은 샘플의 수를 갖도록 선택됨
-  - prediction $\theta_i$ are chosen to minimize the bin-wise squared loss : $\min\limits_{\theta_1,...,\theta_M} \sum_{m=1}^M \sum_{i=1}\^n \textbf{1}(a_m \le \hat{p}\_i \le a_{m+1}){(\theta_m - y_i)}^2$
+  - prediction $\theta_i$ are chosen to minimize the bin-wise squared loss : $$\min\limits_{\theta_1,...,\theta_M} \sum_{m=1}^M \sum_{i=1}\^n \textbf{1}(a_m \le \hat{p}\_i \le a_{m+1}){(\theta_m - y_i)}^2$$
   - the solution results in $\theta_m$ that correspond to the average numbr of positive-class samples in bin $B_m$
 - Isotonic regression : non-parametric calibration method
   - uncalibrated output을 변환시켜주는 piesewise constant function $f$를 학습한다. (i.e. $\hat{q}\_i = f(\hat{p}\_i)$ )
@@ -132,14 +133,69 @@ $$
 &\theta_1 \le \theta_2 \le ... \le \theta_{M+1} = 1
 \end{align*}
 $$
+  - isotonic regression은 histogram binning에서 bin boundaries와 bin predictions가 동시에 최적화되는 엄격한 일반화 형태이다.
 
 - Bayesian Binning into Quantiles (BBQ)
+  - histogram binning을 Bayesian model averaging을 이용해 확장한 방법이다.
+  - BBQ는 $\hat{q}\_i$를 만들어내기 위한 모든 binning schemes를 최소화한다.
+  - binning scheme $s$는 pair $(M,\mathcal{I})$인데 $M$은 bins의 개수이고, $\mathcal{I}$는 [0,1] 구간에서 그에 상응하는 partitioning (disjoint intervals)이다.
+  - binning scheme의 parameter는 $\theta_1,...,\theta_M$이다.
+  - BBQ는 validation dataset $D$에 대해 모든 가능한 binning scheme의 space $S를 고려한다.
+  
+$$
+\begin{align*}
+\mathbb{P} (\hat{q}\_{te} | \hat{p}\_{te}, D) & = \sum_{s \in S} \mathbb{P} (\hat{q}\_{te}, S=s | \hat{p}\_{te}, D) \\
+& = \sum_{s \in S} \mathbb{P} (\hat{q}\_{te}| \hat{p}\_{te}, S=s, D) \mathbb{P} (S=s|D) \\
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\text{where }\mathbb{P} (\hat{q}\_{te}| \hat{p}\_{te}, S=s, D) \text{ is th calibrated probability using binning scheme } s \\
+\end{align*}
+$$
+
+$$
+\begin{align*}
+\mathbb{P} (S=s|D) = {\mathbb{P} (D|S=s) \over {\sum_{s^\prime \in S} \mathbb{P} (D|S=s^\prime)}} \\
+\end{align*}
+$$
+
+  - parameters $\theta_1,...,\theta_M$는 M개의 독립된 binomial분포로 볼 수 있음
+  - Beta 분포를 $\theta_1,...,\theta_M$에 앞서 놓음으로 marginal likelihood $\mathbb{P} (D|S=s)$의 가장 가까운 형태를 얻을 수 있다.
+  - 이런 과정들로 어떤 test input에도 \mathbb{P} (\hat{q}\_{te} | \hat{p}\_{te}, D)를 계산할 수 있다.
 - Plat scailing
+  - scalar parameter $a,b \in \mathbb{R}$를 학습해 $\hat{q}\_i = \sigma (az_i + b)$를 calibrated probability를 얻는다.
+  - $a,b$는 validation set에 대한 NLL loss를 사용함으로써 최적화시킬 수 있다.
+  - 당연하게도 neural network의 parameter는 이 단계에서 전혀 변하지 않음
 
 ### Extension to Multiclass
+logit $z_i$는 벡터이고, $\hat{y}\_i = {argmax}\_k {z_i}^{(k)}$이며, $\hat{p}\_i$는 softmax function &\sigma_{SM}&을 통해 얻어진다.
 - Extension of binning methods
+  - One-versus-all
+  - label이 $\textbf{1} (y_i = k)$이고 predicted probability가 &\sigma_{SM} {(z_i)}^{(k)}인 binary calibration problem을 정의하고, 각 class에 대해 K개의 calibration model을 생성
+  - histogram binning, isotonic regression, BBQ 모두에 적용 가능
 - Matrix and vector scailing
+  - Platt scaling의 multi-class extension이다.
+  
+$$
+\begin{align*}
+$ \hat{q}\_i = \max\limits_k \sigma_{SM} {(Wz_i + b)}^{(k)} \\
+$ {\hat{y}\_i}^\prime = \argmax\limits_k {(Wz_i + b)}^{(k)} \\
+\end{align*}
+$$
+
+  - parameter $W$와 $b$은 validation set에 대한 NLL을 사용해 최적화 시킬 수 있다.
+- Temperature scaling
+  - simplest extension of Platt scaling, single scalar parameter $T>0$을 모든 classes에 대해 사용 ($T$ : temperature)
+  - confidence prediction : &\hat{q}\_i = \max\limits_k \sigma_{SM} {(z_i / T)}^{(k)} & 
+  - temperature는 softmax를 soften 시킨다. 
+  - ${T \to \infty}$ 이면 $\hat{q}\_i$가 $1 \over K$에 수렴하게 되며, ${T \to 0}$ 이면 $\hat{q}\_i = 1$이 된다. $T=1$이면 $\hat{q}\_i$는 원래의 probability와 같다.
+  - $T$는 validation set에 대한 NLL로 최적화된다.
+  - logit vector의 maximum은 변하지 않으므로 accuracy에는 아무 영향을 미치지 않는다.
+  - The model is equivalent to maximizing the entropy of the output probability distribution subject to certain constraints on the logits.
 
 ## Result
+![캡쳐4](https://user-images.githubusercontent.com/59189961/236619538-a80538c4-2f87-4f30-ac8a-3800ab329f5d.png)
 
 ## Conclusion
