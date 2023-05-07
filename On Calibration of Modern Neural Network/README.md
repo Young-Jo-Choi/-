@@ -205,5 +205,4 @@ CIFRA-100에 대한 ResNet-110 with stocastic depth의 calibration method 적용
 
 - 거의 대부분의 경우 temperature scaling방법이 몹시 간단함에도 제일 우세한 것을 확인할 수 있다.
 - 다른 어떤 방법보다 속도 역시 빠른데 conjugate gradient solver를 사용하면 optimal한 temperature를 10번의 iteration 이내로 찾을 수 있다. 
-- 구현 역시 매우 쉬운데 Torch7에서는 nn.MulConstant를 logit과 softmax 사이에 삽입함으로써 실행할 수 있다. 학습 도중 $T=1$로 하고 순차적으로 validation set에 대해 optimal한 $T$를 찾는다.
 
