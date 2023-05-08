@@ -1,9 +1,6 @@
 # On Calibration of Modern Neural Networks (2017)
-<<<<<<< HEAD
-논문 : https://arxiv.org/pdf/1706.04599.pdf
-=======
-논문 : https://arxiv.org/pdf/1706.04599.pdf <br>
->>>>>>> 7163a0af09cbd93ee4789449bb269b0255a692af
+
+논문 : https://arxiv.org/pdf/1706.04599.pdf<br>
 참고자료 :  https://scikit-learn.org/stable/modules/calibration.html#calibration
 
 Confidence calibration : the problem of predicting probability estimates representative of the true correctness likelihood
