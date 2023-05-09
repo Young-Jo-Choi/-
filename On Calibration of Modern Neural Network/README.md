@@ -1,15 +1,12 @@
 # On Calibration of Modern Neural Networks (2017)
-<<<<<<< HEAD
-논문 : https://arxiv.org/pdf/1706.04599.pdf
-=======
-논문 : https://arxiv.org/pdf/1706.04599.pdf <br>
->>>>>>> 7163a0af09cbd93ee4789449bb269b0255a692af
+
+논문 : https://arxiv.org/pdf/1706.04599.pdf<br>
 참고자료 :  https://scikit-learn.org/stable/modules/calibration.html#calibration
 
 Confidence calibration : the problem of predicting probability estimates representative of the true correctness likelihood
 
 ## Abstract
-- 복잡한 neural network일수록 잘 miscalibration되는 경향이 관찰됨
+- 복잡한 neural network일수록 miscalibration되는 경향이 관찰됨
 - 많은 실험을 통해 depth, width, weight decay, batch normalization 등이 calibration에 영향을 미치는 중요한 요인이라는 것을 발견
 - 다양한 post-preprocessing calibration methods를 SOTA(2017년 기준) model의 image, text classifcation에 적용하였다.
 
@@ -144,7 +141,7 @@ $$
   - BBQ는 $\hat{q}\_i$를 만들어내기 위한 모든 binning schemes를 최소화한다.
   - binning scheme $s$는 pair $(M,\mathcal{I})$인데 $M$은 bins의 개수이고, $\mathcal{I}$는 [0,1] 구간에서 그에 상응하는 partitioning (disjoint intervals)이다.
   - binning scheme의 parameter는 $\theta_1,...,\theta_M$이다.
-  - BBQ는 validation dataset $D$에 대해 모든 가능한 binning scheme의 space $S를 고려한다.
+  - BBQ는 validation dataset $D$에 대해 모든 가능한 binning scheme의 space $S$를 고려한다.
   
 $$
 \begin{align*}
@@ -167,17 +164,17 @@ $$
 
   - parameters $\theta_1,...,\theta_M$는 M개의 독립된 binomial분포로 볼 수 있음
   - Beta 분포를 $\theta_1,...,\theta_M$에 앞서 놓음으로 marginal likelihood $\mathbb{P} (D|S=s)$의 가장 가까운 형태를 얻을 수 있다.
-  - 이런 과정들로 어떤 test input에도 \mathbb{P} (\hat{q}\_{te} | \hat{p}\_{te}, D)를 계산할 수 있다.
+  - 이런 과정들로 어떤 test input에도 $\mathbb{P} (\hat{q}\_{te} | \hat{p}\_{te}, D)$를 계산할 수 있다.
 - Plat scailing
   - scalar parameter $a,b \in \mathbb{R}$를 학습해 $\hat{q}\_i = \sigma (az_i + b)$를 calibrated probability를 얻는다.
   - $a,b$는 validation set에 대한 NLL loss를 사용함으로써 최적화시킬 수 있다.
   - 당연하게도 neural network의 parameter는 이 단계에서 전혀 변하지 않음
 
 ### Extension to Multiclass
-logit $z_i$는 벡터이고, $\hat{y}\_i = {argmax}\_k {z_i}^{(k)}$이며, $\hat{p}\_i$는 softmax function &\sigma_{SM}&을 통해 얻어진다.
+logit $z_i$는 벡터이고, $\hat{y}\_i = {argmax}\_k {z_i}^{(k)}$이며, $\hat{p}\_i$는 softmax function $\sigma_{SM} $을 통해 얻어진다.
 - Extension of binning methods
   - One-versus-all
-  - label이 $\textbf{1} (y_i = k)$이고 predicted probability가 &\sigma_{SM} {(z_i)}^{(k)}인 binary calibration problem을 정의하고, 각 class에 대해 K개의 calibration model을 생성
+  - label이 $\textbf{1} (y_i = k)$이고 predicted probability가 $\sigma_{SM} {(z_i)}^{(k)}$인 binary calibration problem을 정의하고, 각 class에 대해 K개의 calibration model을 생성
   - histogram binning, isotonic regression, BBQ 모두에 적용 가능
 - Matrix and vector scailing
   - Platt scaling의 multi-class extension이다.
@@ -192,7 +189,7 @@ $$
   - parameter $W$와 $b$은 validation set에 대한 NLL을 사용해 최적화 시킬 수 있다.
 - Temperature scaling
   - simplest extension of Platt scaling, single scalar parameter $T>0$을 모든 classes에 대해 사용 ($T$ : temperature)
-  - confidence prediction : &\hat{q}\_i = \max\limits_k \sigma_{SM} {(z_i / T)}^{(k)} & 
+  - confidence prediction : $\hat{q}\_i = \max\limits_k \sigma_{SM} {(z_i / T)}^{(k)} $
   - temperature는 softmax를 soften 시킨다. 
   - ${T \to \infty}$ 이면 $\hat{q}\_i$가 $1 \over K$에 수렴하게 되며, ${T \to 0}$ 이면 $\hat{q}\_i = 1$이 된다. $T=1$이면 $\hat{q}\_i$는 원래의 probability와 같다.
   - $T$는 validation set에 대한 NLL로 최적화된다.
