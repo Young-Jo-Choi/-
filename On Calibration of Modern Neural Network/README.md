@@ -119,7 +119,7 @@ $$
 **goal** : produce a calibrated probability $\hat{q}\_i$ based on $y_i$, $\hat{p}\_i$ and $z_i$ ( $\hat{p}\_i$ = $\sigma (z_i)$ )
 - Histogram binning : non-parametric calibration method
   - uncalibrated predictions $\hat{p}\_i$를 mutually exclusive한 bins $B_1,...,B_M$로 구간화한다.
-  - 각각의 bin은 calibrated score $\{theta}\_m$가 할당된다. (i.e. if $\hat{p}\_i$ is assigned to bin $B_m$, then $\hat{q}\_i = \{theta}\_m$
+  - 각각의 bin은 calibrated score $\theta\_m$가 할당된다. (i.e. if $\hat{p}\_i$ is assigned to bin $B_m$, then $\hat{q}\_i = \theta\_m$
   - test 단계에서 prediction $\hat{p}\_{te}$가 bin $B_m$에 할당되면 calibrated prediction $\hat{q}\_{te}$가 $\theta_m$이 된다.
   - bin boundaries : $0=a_i \le a_2 \le ... \le a_{M+1} = 1$, where the bin $B_m$ is defined by interval $(a_m, a_{m+1}]$ <br> bin boundary들은 같은 length를 갖거나 같은 샘플의 수를 갖도록 선택됨
   - prediction $\theta_i$ are chosen to minimize the bin-wise squared loss : $$\min\limits_{\theta_1,...,\theta_M} \sum_{m=1}^M \sum_{i=1}\^n \textbf{1}(a_m \le \hat{p}\_i \le a_{m+1}){(\theta_m - y_i)}^2$$
