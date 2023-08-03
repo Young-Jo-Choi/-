@@ -182,13 +182,13 @@ $$
 
 ![gradcam2](https://user-images.githubusercontent.com/59189961/227709605-c6b583c5-832e-4de6-b908-95a5641553c2.jpg)
 - 간호사 이미지와 의사 이미지에 대해 두번째 열에서 모델이 둘다 간호사로 분류하였다. 간호사는 올바른 분류를 하였지만 의사의 경우 틀린 예측을 하였다. <br>(여기서의 모델은 VGG-16을 기반으로 의사와 간호사만 구분하도록 binary classification task로 finetune된 모델이다.)
-- 오분류에 대한 원인을 분석하고자 Grad-CAM을 이미지를 찍었고 모델이 머리카락을 주로 봤다는 것을 확인하였다. 즉 여자인 것을 모델이 확인하고 실제 의사임에도 간호사로 예측하였다.
+- 오분류에 대한 원인을 분석하고자 Grad-CAM의 이미지를 찍었고 모델이 머리카락을 주로 봤다는 것을 확인하였다. 즉 여자인 것을 모델이 확인하고 실제 의사임에도 간호사로 예측하였다.
 - 학습시킨 데이터셋의 구성을 살펴보니 의사의 경우 78%가 남자의사로 되어있고, 간호사의 경우 93%가 여자로 되어있었다.
 - 이에 남자 간호사와 여자 의사 이미지를 추가하여 모델을 재학습시켰고 모델이 예측을 올바로 수행하였다. 
 - unbiased model의 Grad-CAM 결과를 확인해보면 간호사의 경우 상의의 짧은 소매, 의사의 경우 청진기와 상의의 긴 소매에 주목하여 예측하는 것을 확인하였다.
 
 ## Conclusion
-- 해당 연구에서는 CNN 기반 모델을 더 transparent하게 만들기 위한 class-discriminative localization 기술인 gradient기반 clss activation mapping을 제안하였다.
+- 해당 연구에서는 CNN 기반 모델을 더 transparent하게 만들기 위한 class-discriminative localization 기술인 gradient기반 class activation mapping을 제안하였다.
 - 또한 Grad-CAM localization을 기존의 high resolution visualization 기술과 결합하여 Guided Grad-CAM visualization하였다.
 - 클래스를 더 정확하게 구별하고 모델의 신뢰성을 더 잘 드러낼 수 있으며, 데이터 세트에 존재할지 모르는 bias를 식별하는데에 도움이 될 수 있다.
 - We believe that a true AI system should not only be intelligent, but also be able to reason about its beliefs and actions for humans to trust and use it.
