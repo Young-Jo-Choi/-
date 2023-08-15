@@ -13,7 +13,7 @@
 - 이 연구에서는 Imagenet 하나만을 training set으로 사용했으며, 단일 8-GPU를 사용해 3일 가량의 시간(pretraining : 53H, finetuning : 20H) 을 사용해 비슷한 개수의 파라미터와 효율성을 가진 convnet과 경쟁할 수 있는 수준으로 훈련했다.
 - Figure1에서 보이듯 이전 연구보다 더 나은 성능을 기록했으며 ablation study에 상세한 parameter 정보를 기록하고 있다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9cdffb34-62d3-4efc-8486-13a099e56667/Untitled.png)
+![캡쳐30](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/071df246-2aed-4227-b179-ab56708a8d8b)
 
 - distillation 같은 경우 token-based strategy라는 transformer에 최적화된 방법을 소개하고 일반적인 distillation을 능가하는 것까지 같이 보였다.
     - distillation token이라는 것을 사용하는데 ViT의 class token과 동일한 역할을 수행한다. 단지 class token은 true label을 예측하는데에 쓰이고 distillation token은 teacher model이 만들어내는 label을 reproduce하는데에 쓰인다.
@@ -67,7 +67,7 @@ $L_{global}^{hardDistill} = {1 \over 2}L_{CE}(\psi(Z_s),y) + {1 \over 2}L_{CE}(\
 
 hard label은 label smoothing을 통해 soft label로 변환시킬 수 있는데, true labeld로 1-$\epsilon$의 확률을 갖고 나머지 class들이 $\epsilon$의 확률을 나눠 갖는 방식이다. 해당 논문에서는 $\epsilon$=0.1로 고정하였다. 
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1287ab93-2861-4a22-a258-f18c0afd60b9/Untitled.png)
+![캡쳐26](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/8cc00be8-dacd-49d2-a881-fe8ffb0ee791)
 
 ## Distillation token
 
@@ -86,3 +86,53 @@ hard label은 label smoothing을 통해 soft label로 변환시킬 수 있는데
 테스트 시점에 모델이 만들어낸 class embedding과 distillation embedding은 모두 linear classifer와 연결되어 라벨을 추론할 수 있다. 그러나 해당 논문에서 사용하는 방법은 이 두 개의 head를 late fusion하는 것으로, 두 classifer에 softmax 출력을 추가하여 예측을 수행한다. 
 
 # 5. Experiments
+
+기본적으로 사용하는 모델은 vanilla ViT와 동일하며 convolution 층을 갖지 않는다.  유일한 차이점은  training strategy와 distillation token의 사용 여부이다. 또한 pre-training에서는 MLP hea를 사용하지 않고 linear classifier만을 사용한다. 기본적으로 ViT-B와 DeiT-B라는 prefix를 붙여 모델 결과를 구분하였고, larger resolution에서 DeiT-B를 fine-tune하면 DeiT-B↑384와 같이 resolution을 뒤에 붙였다. 해당 논문에서 사용한 distillation procedure를 사용하면 이를 구분 짓기 위해 DeiT⚗와 같이 표기하였다. 
+
+ViT-B(DeiT-B)의 파라미터는 D=768, h=12, d=D/h=64로 고정하였다. 
+(ViT-B : base / ViT-L : large / ViT-H : huge)
+
+![캡쳐24](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/95560211-d048-4446-b4b4-dc26fa286357)
+
+## 5.2 Distillation
+
+![캡쳐25](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/6b27cffb-9c4d-4ac3-abc2-2820a54a8bcd)
+
+Table 2는 서로 다른 teacher architecture를 사용하여 distillation한 결과를 보여준다. convnet이 가장 best teacher인 것을 확인할 수 있는데 이는 inductive bias를 상속받기 때문으로 보인다. 추후의 모든 실험에서 default teacher는 RegNetY-16GF(84M parameters)로 고정한다.
+
+![캡쳐28](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/321913e1-24cb-40e4-a2b0-1e2ab59db975)
+
+### comparison of distillation methods
+
+서로 다른 distillation strategy에 따른 결과는 table3에 나와있는데 hard distillation이 soft distillation에 비해 더 나은 성능을 보여준다. (심지어 class embedding만을 사용할 때 역시 마찬가지이다.) 가장 성능이 좋은 것은 class+distillation embedding을 동시에 사용했을 때인데 이는 section4를 통해 제시된 전략(late fusion)이고 두 개의 token이 분류에 유용한 정보를 상호보완적으로 제공하는 것을 확인할 수 있다. 
+
+distillation token이 미세하게나마 class token보다 더 나은 결과를 주는 것을 볼 수 있는데 이는 convnet의 inductive bias로부터 더 많은 benefit을 가져왔기 때문으로 보인다.
+
+### Agreement with the teacher & inductive bias?
+
+실제로 훈련을 용이하게 하는 inductive bias를 계승하고 있을까?
+
+![캡쳐29](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/9bb4c98d-a990-4bae-b7b1-6e6e05f10064)
+
+table4는 각 모델 간 예측의 불일치한 비율을 나타낸 것인데 논문의 distilled model이 scratch부터 학습한 transformer보다 convnet과 더 연관되어있는 것을 확인할 수 있다. 조금 더 상세하게는 distillation embedding으로부터의 추론과 convent과의 연관성은 class embedding의 추론이 convnet과 연관된 정도보다 더 강하다는 것을 확인할 수 있다. class embdding은 convnet보다 distillation없이 학습한 DeiT와 더 유사하다. class+distillation embedding의 경우 유사도 측면에서 중간 수치인 것을 확인할 수 있다.
+
+## 5.3 Efficiency는 생략
+
+![캡쳐30](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/071df246-2aed-4227-b179-ab56708a8d8b)
+
+## 5.4 Transfer learning: Performance on downstream tasks
+
+Imagenet에 대한 평가를 통해 DeiT가 좋은 성능을 낸다는 것을 확인하였지만 transfer learning을 통한 다른 dataset에 대한 성능 역시 측정하여 DeiT의 generalization을 확인하였다.
+
+![캡쳐33](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/02b489f4-24ad-4e93-a05d-b8003a8e2d58)
+
+# 6. Ablation
+
+![캡쳐32](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/0af7ce8e-0a17-4a24-9e35-452b7f565544)
+
+## hyper-parameter
+
+자세한 설명은 table9로 갈음함
+
+![캡쳐31](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/c36c2e8a-d624-407b-8cdb-8594928615ad)
+
