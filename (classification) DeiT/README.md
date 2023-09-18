@@ -2,7 +2,7 @@
 
 # Abstract
 
-- 최근(?) convolution layer를 사용하지 않고 순수하게 attetion에 기반해 image를 다루는 neural network가 소개됨 (ViT, vision transformer)
+- 최근(2020년 기준) convolution layer를 사용하지 않고 순수하게 attention에 기반해 image를 다루는 neural network가 소개됨 (ViT, vision transformer)
 - 높은 performance를 보이는 ViT는 수억 단위의 image들로 사전학습된 것임
 - 이 연구에서 외부 데이터셋을 쓰지 않고 오직 imagenet만을 사용해 ViT를 학습시켰고 이 과정에서 transformer에 특화된 teacher-student strategy를 도입하였음
 
