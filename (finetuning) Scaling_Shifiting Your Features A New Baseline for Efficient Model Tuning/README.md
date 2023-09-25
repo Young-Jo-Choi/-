@@ -73,7 +73,7 @@ assuming that the input is $x \in \mathbb{R}^{{(N^2 + 1)}\times d}$, denoted the
 
 ### Design of SSF
 
-![Untitled](Scaling%20&%20Shifiting%20Your%20Features%20A%20New%20Baseline%20f%20c9f23ba4fbf749989d53e44b08e749bf/Untitled.png)
+![num1](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/734ea1d1-3d9a-49a6-b093-52bc05c7d2c2)
 
 upstream task에서 pre-trained된 모델에서, 각 OP(operation) 다음에 SSF-ADA를 넣어 scale&shift 연산을 수행한다. OP들은 multi-head self-attention(MSA), MLP, layer normalization(LN) 등을 포함한다.  fine-tuning 동안, pre-trained weight은 frozen되고 SSF-ADA의 parameters만 update된다.  (figure2 참고, (b)와 (c)는 분리된 그림임)
 
@@ -89,7 +89,7 @@ where, $\gamma \in \mathbb{R}^d$ and $\beta \in \mathbb{R}^d$ are the scale and 
 
 # 4. Experiments
 
-![Untitled](Scaling%20&%20Shifiting%20Your%20Features%20A%20New%20Baseline%20f%20c9f23ba4fbf749989d53e44b08e749bf/Untitled%201.png)
+![num2](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/3d481a0c-b603-40c7-92ec-4fc3bdcbe97b)
 
 설명은 생략 (figure5에 다 나와있음)
 
@@ -97,7 +97,7 @@ where, $\gamma \in \mathbb{R}^d$ and $\beta \in \mathbb{R}^d$ are the scale and 
 
 table 6은 pre-trained된 ViT-B/16 model을 CIFAR-100에 tuning시킨 것이다.
 
-![Untitled](Scaling%20&%20Shifiting%20Your%20Features%20A%20New%20Baseline%20f%20c9f23ba4fbf749989d53e44b08e749bf/Untitled%202.png)
+![num3](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/40d6b53f-ea4e-42b9-8277-45243422e1ea)
 
 (a) : 몇 개의 layer에 SSF-ADA 모듈을 붙여 tuning 했을 때 성능이 차이 나는지에 대한 결과
 
@@ -109,6 +109,6 @@ table 6은 pre-trained된 ViT-B/16 model을 CIFAR-100에 tuning시킨 것이다.
 
 ## 4.5 Visualization and Analysis
 
-![Untitled](Scaling%20&%20Shifiting%20Your%20Features%20A%20New%20Baseline%20f%20c9f23ba4fbf749989d53e44b08e749bf/Untitled%203.png)
+![num4](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/4eeaa2eb-517e-4047-87c7-a29833005e47)
 
 figure5는 full fine-tuning에 비해 각 layer의 output feature들이 얼마나 유사한지 나타낸 것임, 마지막 layer에서 SSF는 full fine-tuning과 가장 유사한 feature들 가지며, 정확도 역시 제일 근접하다.
