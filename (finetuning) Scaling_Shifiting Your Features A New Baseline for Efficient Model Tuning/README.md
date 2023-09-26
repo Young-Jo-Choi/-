@@ -93,6 +93,10 @@ where, $\gamma \in \mathbb{R}^d$ and $\beta \in \mathbb{R}^d$ are the scale and 
 
 설명은 생략 (figure5에 다 나와있음)
 
+![image](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/6c1c5843-6776-443c-a437-a5164740258a)
+
+시간 자체는 큰 차이가 나지 않음
+
 ## 4.3 The Impacts of Different Designs
 
 table 6은 pre-trained된 ViT-B/16 model을 CIFAR-100에 tuning시킨 것이다.
