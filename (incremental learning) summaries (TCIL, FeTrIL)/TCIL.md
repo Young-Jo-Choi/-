@@ -65,7 +65,7 @@ $A_s(u_t) = \sigma(f^{7 \times 7}([\text{AvgPool}(u_t);\text{MaxPool}(u_t)]))$
 (MaxPool of $A_s$ output shape : $\mathbb{R}^{1 \times H \times W}$)
 
 
-$f^{7\times 7}$ : convolution with kernel size $7 \times 7$, output shape : $\mathbb{R}^{\times H \times W}$
+$f^{7\times 7}$ : convolution with kernel size $7 \times 7$, output shape : $\mathbb{R}^{H \times W}$
 
 ## Training Loss
 
