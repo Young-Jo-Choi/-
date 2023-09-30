@@ -57,7 +57,7 @@ $f_t = A_t(u_t) = A_s(A_c(u_t) \otimes u_t) \otimes (A_c(u_t) \otimes u_t)$ : fe
 
 $A_c(u_t) = \sigma(MLP(\text{AvgPool}(u_t)) + MLP(\text{MaxPool}(u_t)))$
 
-$\text{AvgPool}(u_t), \text{MaxPool}(u_t) \in \mathbb{R}$
+($\text{AvgPool}(u_t), \text{MaxPool}(u_t) \in \mathbb{R}$)
 
 $A_s(u_t) = \sigma(f^{7 \times 7}([\text{AvgPool}(u_t);\text{MaxPool}(u_t)]))$
 
