@@ -61,8 +61,8 @@ $A_c(u_t) = \sigma(MLP(\text{AvgPool}(u_t)) + MLP(\text{MaxPool}(u_t)))$
 
 $A_s(u_t) = \sigma(f^{7 \times 7}([\text{AvgPool}(u_t);\text{MaxPool}(u_t)]))$
 
-(AvgPool of $A_s$ output shape : $\mathbb{R}^{1 \times \times H \times W}$})<br>
-(MaxPool of $A_s$ output shape : $\mathbb{R}^{1 \times \times H \times W}$})
+(AvgPool of $A_s$ output shape : $\mathbb{R}^{1 \times H \times W}$)<br>
+(MaxPool of $A_s$ output shape : $\mathbb{R}^{1 \times H \times W}$)
 
 
 $f^{7\times 7}$ : convolution with kernel size $7 \times 7$, output shape : $\mathbb{R}^{\times H \times W}$
