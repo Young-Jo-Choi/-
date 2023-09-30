@@ -38,7 +38,7 @@ $q_c$, $\hat{q}_c$ : softmax with temperature,  $\hat{q}_c$ is from logit of $g_
 
 $n_{old} = (\lVert w_1 \rVert, ..., \lVert w_{\hat{c}_{t-1}}\rVert)$
 
-$n_{new} = (\lVert w_{\hat{c}_{t-1}+1}\rVert,...\lVert w_{\hat{c}_{t}} \rVert)$0.0
+$n_{new} = (\lVert w_{\hat{c}_{t-1}+1}\rVert,...\lVert w_{\hat{c}_{t}} \rVert)$
 
 $\gamma = \text{Mean}(n_{old})/\text{Mean}(n_{new})$
 
@@ -62,4 +62,4 @@ $f^{7\times 7}$ : convolution with kernel size $7 \times 7$
 
 ## Training Loss
 
-$\mathcal{L} = \mathcal{L}_{clf} + \alpha\mathcal{L}_kd+ \alpha\mathcal{L}_{div}$
+$\mathcal{L} = \mathcal{L}_{clf} + \alpha \mathcal{L}_{kd} + \alpha \mathcal{L}_{div}$
