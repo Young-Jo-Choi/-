@@ -22,7 +22,7 @@ $\hat{f}^t(C_p)$ : pseudo-features vector of a pseudo-sample $c_p$ of class $C_p
 
 ## overall process
 
-![Untitled](FeTrIL%2010a874b9677747449b9054b5e870df6b/Untitled.png)
+![Untitled](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/165917b3-c95a-4b8a-b975-5567854e5698)
 
 ## selection of pseudo features
 
