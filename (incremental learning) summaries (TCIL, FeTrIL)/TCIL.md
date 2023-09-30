@@ -1,5 +1,4 @@
 # TCIL
-(latex 수식 에러가 있음)
 
 ## Pipeline
 
@@ -31,16 +30,16 @@ $R$ : rehearsal memory set
 
 $\mathcal{L}_f(x) = \lVert F_t(x) - F_i(x) \rVert_2$
  
-$\mathcal{L}_l(x) = \Sigma_{c=1}^{\tilde{C}_{t-1}}q_c(x)(log{q_c(x) \over \hat{q}_c(x)})$
+$\mathcal{L}\_l(x) = \Sigma_{c=1}^{\tilde{C}_{t-1}}q_c(x)(log{q_c(x) \over \hat{q}_c(x)})$
 
-$q_c, \hat{q}_c$ : softmax with temperature,  $\hat{q}_c$ is from logit of $g_{t-1}$ and $q_t$ is from logit of $g_t$ 
+$q_c, \hat{q}_c$ : softmax with temperature,  $\hat{q}_c$ is from logit of $g\_{t-1}$ and $q_t$ is from logit of $g_t$ 
 
 
 ## Classifier Re-scoring (CR)
 
 $n_{old} = (\lVert w_1 \rVert, ..., \lVert w_{\hat{c}_{t-1}}\rVert)$
 
-$n_{new} = (\lVert w_{\hat{c}_{t-1}+1}\rVert,...\lVert w_{\hat{c}_{t}} \rVert)$
+$n_{new} = (\lVert w_{\hat{c}\_{t-1}+1}\rVert,...\lVert w_{\hat{c}_{t}} \rVert)$
 
 $\gamma = \text{Mean}(n_{old})/\text{Mean}(n_{new})$
 
