@@ -61,7 +61,7 @@ $A_c(u_t) = \sigma(MLP(\text{AvgPool}(u_t)) + MLP(\text{MaxPool}(u_t)))$
 
 $A_s(u_t) = \sigma(f^{7 \times 7}([\text{AvgPool}(u_t);\text{MaxPool}(u_t)]))$
 
-($A_c$와 $A_s$에서의 pooling은 output shape이 다름)
+($A_s$에서의 pooling은 output shape이 똑같은 pooling임)
 
 $f^{7\times 7}$ : convolution with kernel size $7 \times 7$
 
