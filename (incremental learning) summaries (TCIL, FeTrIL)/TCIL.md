@@ -1,4 +1,5 @@
 # TCIL
+(latex 수식 에러가 있음)
 
 ## Pipeline
 
@@ -29,10 +30,11 @@ $R$ : rehearsal memory set
 ($\lambda=0$ means the non-rehearsal setting, i.e., all loss is from $\mathcal{L}_l$)
 
 $\mathcal{L}_f(x) = \lVert F_t(x) - F_i(x) \rVert_2$
-
+ 
 $\mathcal{L}_l(x) = \Sigma_{c=1}^{\tilde{C}_{t-1}}q_c(x)(log{q_c(x) \over \hat{q}_c(x)})$
 
-$q_c$, $\hat{q}_c$ : softmax with temperature,  $\hat{q}_c$ is from logit of $g_{t-1}$ and $q_t$ is from logit of $g_t$
+$q_c, \hat{q}_c$ : softmax with temperature,  $\hat{q}_c$ is from logit of $g_{t-1}$ and $q_t$ is from logit of $g_t$ 
+
 
 ## Classifier Re-scoring (CR)
 
@@ -42,7 +44,7 @@ $n_{new} = (\lVert w_{\hat{c}_{t-1}+1}\rVert,...\lVert w_{\hat{c}_{t}} \rVert)$
 
 $\gamma = \text{Mean}(n_{old})/\text{Mean}(n_{new})$
 
-$o_{rt}(x) = \mathcal{W}_t(o_t) = (o_{old}(x), \gamma \cdot o_{new}(x))$
+$o_{rt}(x) = \mathcal{W_t} (o_t) = (o_{old}(x), \gamma \cdot o_{new}(x))$
 
 ## Feature Fusion Module (FFM)
 
@@ -56,7 +58,11 @@ $f_t = A_t(u_t) = A_s(A_c(u_t) \otimes u_t) \otimes (A_c(u_t) \otimes u_t)$ : fe
 
 $A_c(u_t) = \sigma(MLP(\text{AvgPool}(u_t)) + MLP(\text{MaxPool}(u_t)))$
 
+$\text{AvgPool}(u_t), \text{MaxPool}(u_t) \in \mathbb{R}$
+
 $A_s(u_t) = \sigma(f^{7 \times 7}([\text{AvgPool}(u_t);\text{MaxPool}(u_t)]))$
+
+($A_c$와 $A_s$에서의 pooling은 output shape이 다름)
 
 $f^{7\times 7}$ : convolution with kernel size $7 \times 7$
 
