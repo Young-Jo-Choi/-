@@ -63,7 +63,7 @@ $A_s(u_t) = \sigma(f^{7 \times 7}([\text{AvgPool}(u_t);\text{MaxPool}(u_t)]))$
 
 ($A_s$에서의 pooling은 output shape이 똑같은 pooling임)
 
-$f^{7\times 7}$ : convolution with kernel size $7 \times 7$
+$f^{7\times 7}$ : convolution with kernel size $7 \times 7$, 마찬가지로 output shape이 똑같이($\mathbb{R}^{1 \times H \times W}$) 나옴
 
 ## Training Loss
 
