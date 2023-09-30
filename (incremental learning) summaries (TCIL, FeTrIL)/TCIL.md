@@ -67,4 +67,4 @@ $f^{7\times 7}$ : convolution with kernel size $7 \times 7$
 
 ## Training Loss
 
-$\mathcal{L} = \mathcal{L}_{clf} + \alpha \mathcal{L}_{kd} + \alpha \mathcal{L}_{div}$
+$\mathcal{L} = \mathcal{L}\_{clf} + \alpha \mathcal{L}\_{kd} + \alpha \mathcal{L}_{div}$
