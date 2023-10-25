@@ -2,7 +2,7 @@
 
 We introduce a method which combines a fixed feature extractor and a pseudo-features generator to improve the stability-plasticity balance. The generator uses a simple yet effective geometric translation of new class features to create representations of past classes, made of pseudo-features. The translation of features only requires the storage of the **centroid** representations of past classes to produce their **pseudo-features**.
 
-New classes are represented by their image features obtained from the feature extractor. Past classes are represented by pseudofeatures which are derived from features of new classes by using a **geometric translation process. (This translation moves features toward a region of the features space which is relevant for past classes.)**
+New classes are represented by their image features obtained from the feature extractor. Past classes are represented by pseudo features which are derived from features of new classes by using a **geometric translation process. (This translation moves features toward a region of the features space which is relevant for past classes.)**
 
 $\hat{f}^t(C_p)$ : pseudo-features of past classes
 
