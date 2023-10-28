@@ -1,4 +1,4 @@
-# multi-time attention networks for ~
+# multi-time attention networks for irregularly sampled time series
 
 # Abstract
 
@@ -30,48 +30,72 @@ healthcare, climate science, ecology, astronomy, biology 등 다양한 도메인
 
 **********Notation**********
 
-D
+- $D = \{(s_n, y_n)|n=1,...,N\}$는 시계열 데이터를 나타내는데 전체 cases의 수 (의료데이터의 경우 환자수)를 의미한다. $s_i$는 하나의 case에 대응하며 $D$개의 dimension를 갖고 $y_i$는 single target value이다. 여기서 dimension는 논문 내에서 feature와 비슷한 의미로 쓰인다.
+- case에 따라 또 dimension $d$에 따라 다른 시간대에서 observation이 보이기도 하며 관측된 개수 역시 다를 수 있다. n번째 case가 d번째 feature에 관측값으로 갖고 있는 것들의 길이를 $L_{dn}$으로 나타낸다.
+- time series $d$ for data case $n$은 튜플 $s_{dn}=(t_{dn},x_{dn})$으로 나타내며 $t_{dn} = \[t_{1dn},...t_{L_{dn}dn}]$, $x_{dn} = \[x_{1dn},...x_{L_{dn}dn}]$이다. 여기서 $t$는 시간, $x$는 그 시간대에 대응하는 데이터라고 생각하면 된다.
 
 **Time Embedding** 
+- time attention module은 contiuous time points를 vector space로 embedding 시키는 것에 기반한다.
+- $\phi_h(t)$ 함수의 $h=1,...,H$ 경우의 embedding을 만들어내며 각각의 output size는 $d_r$이다. 이 함수의 embedding $h$의 dimension $i$는 다음과 같다.
 
- ****
+$$\phi_h(t)[i]  = \begin{cases} 
+		\omega_{0h} \cdot t+\alpha_{0h} & if ~~~~ i=0 \\ 
+         	sin(\omega\_{ih} \cdot t +\alpha_{ih}) & if ~~~~ i>0
+     \end{cases}$$
 
-$$
-\phi_h(t)[i] = \begin{cases}\omega_{0h} \cdot t+\alpha_{0h},~~~~ \qquad if \quad i=0 &\\sin(\omega_{ih} \cdot t +\alpha_{ih}), \quad if \quad 0<i<d_r \end{cases}
-$$
+
+- $\omega\_{ih}$와 $\alpha_{ih}$는 learnable parameters이다.
+
+**Multi-Time Attention**
 
 $$
 \begin{align} 
-	\text{mTAN}(t,\mathbf{s})[j] & = \sum_{h=1}^H \sum_{d=1}^D \hat{x}_{hd}(t,\mathbf{s})\cdot U_{hdj}\\ 
-    	\hat{x}_{hd}(t,\mathbf{s}) & =\sum_{i=1}^{L_d} \kappa_h (t,t_{id})x_{id}\\ 
+	\text{mTAN}(t,\mathbf{s})[j] & = \sum_{h=1}^H \sum_{d=1}^D \hat{x}\_{hd}(t,\mathbf{s})\cdot U_{hdj}\\ 
+    	\hat{x}\_{hd}(t,\mathbf{s}) & =\sum_{i=1}^{L_d} \kappa_h (t,t_{id})x_{id}\\ 
         \kappa_h (t,t_{id}) & = {{\text{exp}(\phi_h(t)\mathbf{wv}^T \phi_h(t_{id})^T /\sqrt{d_k}} \over {\Sigma_{i'=1}^{L_d} \text{exp}(\phi_h(t)\mathbf{wv}^T \phi_h(t_{i'd})^T /\sqrt{d_k}}} 
 \end{align}
 $$
 
+![캡쳐3](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/bbb8c51a-ce8d-49bd-aafa-a8f3fb647576)
+
 # 4. Encoder-Decoder framework
 
-**Encoder**
-
-$$
-\begin{align} z_k &\sim p(z_k) \\h_{RNN}^{dec}&= \text{RNN}^{dec}(z)\\ h_{TAN}^{dec}&= \text{mTAND}^{dec}(t,h_{RNN}^{dec}) \\ x_{id}&\sim N(x_{id};f^{dec}(h_{i,TAN}^{dec})[d], \sigma^2 I \end{align}
-$$
+![캡쳐4](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/a274e805-90bf-4932-84cc-06f51ceae445)
 
 **Decoder**
 
 $$
-\begin{align} h_{TAN}^{enc} &= \text{mTAND}^{enc}(r,s)\\h_{RNN}^{enc} &=\text{RNN}^{enc}(h_{TAN}^{enc}) \\z_k \sim q_\gamma(z_k|\mu_k,{\sigma}^2_k), \; \mu_k &= f_{\mu}^{enc}(h_{k,RNN}^enc), \; {\sigma}^2_k =\text{exp}(f_\sigma^{enc}(h_{k,RNN}^{enc}))\end{align} 
+\begin{align} z_k &\sim p(z_k) \\
+h_{RNN}^{dec}&= \text{RNN}^{dec}(z)\\
+h_{TAN}^{dec}&= \text{mTAND}^{dec}(t,h_{RNN}^{dec}) \\
+x_{id}&\sim N(x_{id};f^{dec}(h_{i,TAN}^{dec})\[d], \sigma^2 I \end{align}
 $$
 
-******************************************Unsupervised Learning******************************************
+**Encoder**
 
-$\mathcal{L}_{NVAE}(\theta, \gamma)=\sum_{n=1}^N {1\over\Sigma_d L_{dn}}(\mathbb{E}_{q_\gamma(z|r,s_n)}[\text{log}p_\theta(x_n|z,t_n)] - D_{KL}(q_\gamma(z|r,s_n)||p(z)))$
+$$
+\begin{align} 
+h_{TAN}^{enc} &= \text{mTAND}^{enc}(r,s)\\
+h_{RNN}^{enc} &=\text{RNN}^{enc}(h_{TAN}^{enc}) \\
+z_k \sim q_\gamma(z_k|\mu_k,{\sigma}^2_k), ~~~ \mu_k &= f_{\mu}^{enc}(h_{k,RNN}^enc), ~~~  {\sigma}^2_k =\text{exp}(f_\sigma^{enc}(h_{k,RNN}^{enc}))
+\end{align} 
+$$
 
-$D_{KL}(q_\gamma(z|r,s_n)||p(z)) = \sum_{i=1}^K D_{KL}(q_\gamma(z_i|r,s_n)||p(z_i))$
+**Unsupervised Learning**
 
-$\text{log}p_\theta(x_n|z,t_n) = \sum_{d=1}^D\sum_{j=1}^{L_{dn}} \text{log}p_\theta (x_{jdn}|z, t_{jdn})$
+- $\mathcal{L}\_{NVAE}(\theta, \gamma)=\Sigma_{n=1}^N {1\over\Sigma_d L_{dn}}(\mathbb{E}\_{q_\gamma(z|r,s_n)}[\text{log}p_\theta(x_n|z,t_n)\] - D_{KL}(q_\gamma(z|r,s_n)||p(z)))$
 
-**************************************Supervised Learning**************************************
+- $D_{KL}(q_\gamma(z|r,s_n)||p(z)) = \Sigma_{i=1}^K D_{KL}(q_\gamma(z_i|r,s_n)||p(z_i))$
 
-$\mathcal{L}_{supervised}(\theta,\gamma,\delta)= \mathcal{L}_{NVAE}+ \lambda \mathbb{E}_{q_\gamma(z|r,s_n)} \text{log}p_\delta (y_n|z)$
+- $\text{log}p_\theta(x_n|z,t_n) = \Sigma_{d=1}^D\Sigma_{j=1}^{L_{dn}} \text{log}p_\theta (x_{jdn}|z, t_{jdn})$
 
-$y^{*} = \underset{y \in \mathcal{Y}}{\text{argmax}}\mathbb{E}_{q_\gamma(z|r,s)}[\text{log}p_\delta (y|z)]$
+**Supervised Learning**
+
+- $\mathcal{L}\_{supervised}(\theta,\gamma,\delta)= \mathcal{L}\_{NVAE}+ \lambda \mathbb{E}\_{q_\gamma(z|r,s_n)} \text{log}p_\delta (y_n|z)$
+
+- $y^{*} = \underset{y \in \mathcal{Y}}{\text{argmax}}\mathbb{E}\_{q\_\gamma(z|r,s)}[\text{log}p_\delta (y|z)]$
+
+
+![캡쳐5](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/47f98fc9-166c-4aeb-bba8-6ed9a45f8498)
+
+![캡쳐6](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/3ec3e71f-27ae-4a48-8b9d-db13c0c04bd1)
