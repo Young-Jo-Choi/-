@@ -65,13 +65,24 @@ $$
 - $U_{hdj}$는 learnable한 linear combination weights이다. 해당 weight는 총 $H \times D \times J$개이다.
 - 즉 $t$ 시점 기준으로 특정 case(=instance, 사람)에 대한 time series 데이터를 재구성한 것이라는 의미를 갖는다.
 
+**Discretization**
+- mTAN module은 $t,s$에 대해 연속적인 함수를 정의하므로 fixed-dimensional vector나 discrete sequence를 input form으로 하는 neural network에 직접적으로 넣을 수는 없다. 하지만 고정된 길이의 reference time points $r = \[r_1,...,r_K]$에 대한 mTAN module의 representation을 사용한다면 이런 문제에 적응할 수 있다.
+- auxiliary function $\rho (s)$를 정의해 reference time points를 만들어내도록 한다. 이때 reference set은 $s$의 어느 dimension이라도 모든 observation이 다 채워져있는 time point들로 한다.
+- define the dicretized mTAN module mTAND($r,s$) as mTAND($r,s$)[$i$] = mTAN($r_i,s$). 해당 함수는 input으로 reference time points $r$과 time series $s$를 받아 output으로 mTAN embedding의 length $|r|$인 sequence를 만들어낸다. ($\in \mathbb{R}^{J \times K}$)
+  
 ![캡쳐3](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/bbb8c51a-ce8d-49bd-aafa-a8f3fb647576)
 
+- mTAND module의 전체적인 과정은 fig 1에 나타나 있다. $x_1$과 $x_2$는 $x$의 두 변수이고 각 변수에서 만들어진 embedding seqeunce 중 같은 reference time point(=i)에서 만들어진 embedding($\in \mathbb{R}^{J}$)은 linear 층을 통해 $h_i$로 합쳐진다. 즉 여러 변수에 대해 $|r|$의 길이를 갖는 $h=\[h_1,...h_K\]$로 재구성된다.
+
+  
 # 4. Encoder-Decoder framework
 
 ![캡쳐4](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/a274e805-90bf-4932-84cc-06f51ceae445)
+mTAN network 전체는 encoder-decoder 구조로 되어있고 encoder에서는 classification과 중간의 잠재변수 $z$ 생성, decoder에서는 latent states $z$로부터 time series를 interpolation하는 역할을 한다.
 
 **Decoder**
+- $z=\[z_1,...,z_K\]$는 $K$ reference time points에서 만들어진 latent states이고, 이 latent states로부터 RNN, mTAN 연산을 통해 모든 dimension의 데이터가 채워져있는 time series $\hat{s}=(t,x)$를 만들어낸다. (자세한 과정은 fig 2와 아래 수식 참고)
+- $f^{dec}$는 fully connected 층으로써 맞는 time point와 dimension에 대한 값을 산출하고 이를 평균으로, 고정된 $\sigma^2$를 분산으로 하는 정규분포로 interpolation될 값을 추정한다.
 
 $$
 \begin{align} z_k &\sim p(z_k) \\
@@ -81,6 +92,10 @@ x_{id}&\sim N(x_{id};f^{dec}(h_{i,TAN}^{dec})\[d], \sigma^2 I \end{align}
 $$
 
 **Encoder**
+- mTAN과 RNN 연산을 통해 latent state $z=\[z_1,...,z_K\]$를 만들어낸다. (자세한 과정은 fig 2와 아래 수식 참고)
+- 만들어진 latent state는 분류에도 사용된다.
+- $f\_{\mu}^{dec}$와 $f\_{\sigma}^{dec}$는 decoder와 비슷한 역할로 사용됨 
+- $\gamma$는 encoder components의 모든 parameter를 나타낸다.
 
 $$
 \begin{align} 
@@ -92,17 +107,29 @@ $$
 
 **Unsupervised Learning**
 
-- $\mathcal{L}\_{NVAE}(\theta, \gamma)=\Sigma_{n=1}^N {1\over\Sigma_d L_{dn}}(\mathbb{E}\_{q_\gamma(z|r,s_n)}[\text{log}p_\theta(x_n|z,t_n)\] - D_{KL}(q_\gamma(z|r,s_n)||p(z)))$
+- we follow a slightly modified VAE training approach and maximize a normalized variational lower bound on the log marginal likelihood based on the evidence lower bound or ELBO. (VAE를 잘 모르는 관계로 해당 부분은 패스)
+- $\text{log}p_\theta(x_n|z,t_n)$는 어떤 case $n$에 대해 latent state $z$로부터 모든 feature의 모든 실제 관측된 값들을 가질 log likelihood function을 더한 것
+- $D_{KL}(q_\gamma(z|r,s_n)||p(z))$은 모든 reference time points에 대해 $z$의 이론상 distribution과 실제 $z$의 distibution의 차이를 의미
+- $\mathcal{L}\_{NVAE}(\theta, \gamma)$는 모든 case에 대해 두 값의 차이를 길이만큼 나누어 준 뒤 더한 것임
 
-- $D_{KL}(q_\gamma(z|r,s_n)||p(z)) = \Sigma_{i=1}^K D_{KL}(q_\gamma(z_i|r,s_n)||p(z_i))$
-
-- $\text{log}p_\theta(x_n|z,t_n) = \Sigma_{d=1}^D\Sigma_{j=1}^{L_{dn}} \text{log}p_\theta (x_{jdn}|z, t_{jdn})$
+$$
+\begin{align}
+&\mathcal{L}\_{NVAE}(\theta, \gamma)=\Sigma_{n=1}^N {1\over\Sigma_d L_{dn}}(\mathbb{E}\_{q_\gamma(z|r,s_n)}[\text{log}p_\theta(x_n|z,t_n)\] - D_{KL}(q_\gamma(z|r,s_n)||p(z))) \\
+&D_{KL}(q_\gamma(z|r,s_n)||p(z)) = \Sigma_{i=1}^K D_{KL}(q_\gamma(z_i|r,s_n)||p(z_i)) \\
+&\text{log}p_\theta(x_n|z,t_n) = \Sigma_{d=1}^D\Sigma_{j=1}^{L_{dn}} \text{log}p_\theta (x_{jdn}|z, t_{jdn}) \end{align}$$
 
 **Supervised Learning**
 
-- $\mathcal{L}\_{supervised}(\theta,\gamma,\delta)= \mathcal{L}\_{NVAE}+ \lambda \mathbb{E}\_{q_\gamma(z|r,s_n)} \text{log}p_\delta (y_n|z)$
+- unsupervised learning loss에 classification loss를 더한 형태
+   
+$$
+\begin{align}
+&\mathcal{L}\_{supervised}(\theta,\gamma,\delta)= \mathcal{L}\_{NVAE}+ \lambda \mathbb{E}\_{q_\gamma(z|r,s_n)} \text{log}p_\delta (y_n|z) \\
+&y^{*} = \underset{y \in \mathcal{Y}}{\text{argmax}}\mathbb{E}\_{q\_\gamma(z|r,s)}[\text{log}p_\delta (y|z)] \end{align}$$
 
-- $y^{*} = \underset{y \in \mathcal{Y}}{\text{argmax}}\mathbb{E}\_{q\_\gamma(z|r,s)}[\text{log}p_\delta (y|z)]$
+# 5. Experiments
+
+Datasets은 PhysioNet, MIMIC-III, human activity 이 세가지를 사용했으며 전부 sparse하고 multivariate, irregularly sampled인 time series 데이터들이다. 비교 지표는 interpolation에 대해서는 MSE, classification에 대해서는 AUC와 accuracy를 사용했으며 기존의 interpolation 관련 방법들 혹은 time series 처리 방법들과 성능을 비교하였다.
 
 
 ![캡쳐5](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/47f98fc9-166c-4aeb-bba8-6ed9a45f8498)
