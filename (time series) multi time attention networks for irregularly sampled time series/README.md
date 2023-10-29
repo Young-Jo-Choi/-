@@ -1,4 +1,4 @@
-# multi-time attention networks for irregularly sampled time series
+# Multi-Time Attention Networks for Irregularly Sampled Time Series
 
 # Abstract
 
@@ -28,7 +28,7 @@ healthcare, climate science, ecology, astronomy, biology 등 다양한 도메인
 
 - mTAN module : re-represent a sparse and irregularly sampled time series in a fixed-dimensional space, 여러 개의 연속적인 time-embedding과 attention-based interpolation을 사용한다.
 
-**********Notation**********
+**Notation**
 
 - $D = \{(s_n, y_n)|n=1,...,N\}$는 시계열 데이터를 나타내는데 전체 cases의 수 (의료데이터의 경우 환자수)를 의미한다. $s_i$는 하나의 case에 대응하며 $D$개의 dimension를 갖고 $y_i$는 single target value이다. 여기서 dimension는 논문 내에서 feature와 비슷한 의미로 쓰인다.
 - case에 따라 또 dimension $d$에 따라 다른 시간대에서 observation이 보이기도 하며 관측된 개수 역시 다를 수 있다. n번째 case가 d번째 feature에 관측값으로 갖고 있는 것들의 길이를 $L_{dn}$으로 나타낸다.
@@ -47,6 +47,8 @@ $$\phi_h(t)[i]  = \begin{cases}
 - $\omega\_{ih}$와 $\alpha_{ih}$는 learnable parameters이다.
 
 **Multi-Time Attention**
+- 위의 time embdding은 연속적인 time point를 받아 $H$개의 다른 $d_r$ dimension space로 embedding한다. 이 section에서는 어떻게 time embedding을 이용해 irregularly sampled되고 sparse한 time series 데이터를 처리하는지 다룬다.
+- multi-time attention embeding module인 mTAN($t,s$)은 query time $t$를 받고 D-dimensional한 sparse, irregularly sampled time series 데이터 $s$를 key로 받아 $J$-dimensional embedding을 return한다.
 
 $$
 \begin{align} 
@@ -55,6 +57,13 @@ $$
         \kappa_h (t,t_{id}) & = {{\text{exp}(\phi_h(t)\mathbf{wv}^T \phi_h(t_{id})^T /\sqrt{d_k}} \over {\Sigma_{i'=1}^{L_d} \text{exp}(\phi_h(t)\mathbf{wv}^T \phi_h(t_{i'd})^T /\sqrt{d_k}}} 
 \end{align}
 $$
+
+- $w,v$는 learnable
+- $\kappa_h (t,t_{id})$는 feature $d$가 갖고 있는 관측값들 중 $i$의 가중치를 나타낸 것인데 $H$개의 time embdding 함수 중 $h$의 관점에서 바라본 것이라는 의미를 가지며 처음 input $t$를 query 시점으로 사용한 것이다.
+- $\hat{x}\_{hd}(t,\mathbf{s})$는 실제 관측값들을 가중치에 따라 가중합한 것이다. $x$는 input $s$의 데이터이다.
+- 모든 time embedding 함수 $H$개에 대해, 모든 feature $D$에 대해 가중합한 것을 최종 output으로 하며 shape은 $\mathbb{R}^{J}$이다.
+- $U_{hdj}$는 learnable한 linear combination weights이다. 해당 weight는 총 $H \times D \times J$개이다.
+- 즉 $t$ 시점 기준으로 특정 case(=instance, 사람)에 대한 time series 데이터를 재구성한 것이라는 의미를 갖는다.
 
 ![캡쳐3](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/bbb8c51a-ce8d-49bd-aafa-a8f3fb647576)
 
