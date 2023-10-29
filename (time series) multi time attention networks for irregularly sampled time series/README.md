@@ -1,5 +1,8 @@
 # Multi-Time Attention Networks for Irregularly Sampled Time Series
 
+arxiv : https://arxiv.org/pdf/2101.10318.pdf<br>
+github : https://github.com/reml-lab/mTAN
+
 # Abstract
 
 time series의 데이터를 수집할 때 irregular하게 sampling된 경우가 매우 많고 이는 일반적인 딥러닝 모델에서 중요한 challenge 중에 하나이다. 해당 논문에서는 EHR 데이터의 여러 상황에서 motivation을 얻었으며 주로 sparse, irregularly sampled, multivariate한 데이터를 다룬다.
