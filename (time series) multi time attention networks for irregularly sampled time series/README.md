@@ -120,7 +120,8 @@ $$
 
 **Supervised Learning**
 
-- unsupervised learning loss에 classification loss를 더한 형태
+- unsupervised learning term에 classification에 해당하는 부분을 더한 형태
+- (실제 코드에서는 다음 수식에 음수를 곱해 loss function으로 사용)
    
 $$
 \begin{align}
