@@ -68,7 +68,7 @@ $$
 **Discretization**
 - mTAN module은 $t,s$에 대해 연속적인 함수를 정의하므로 fixed-dimensional vector나 discrete sequence를 input form으로 하는 neural network에 직접적으로 넣을 수는 없다. 하지만 고정된 길이의 reference time points $r = \[r_1,...,r_K]$에 대한 mTAN module의 representation을 사용한다면 이런 문제에 적응할 수 있다.
 - auxiliary function $\rho (s)$를 정의해 reference time points를 만들어내도록 한다. 이때 reference set은 $s$의 어느 dimension이라도 모든 observation이 다 채워져있는 time point들로 한다.
-- define the dicretized mTAN module mTAND($r,s$) as mTAND($r,s$)[$i$] = mTAN($r_i,s$). 해당 함수는 input으로 reference time points $r$과 time series $s$를 받아 output으로 mTAN embedding의 length $|r|$인 sequence를 만들어낸다. ($\in \mathbb{R}^{J \times K}$)
+- Define the dicretized mTAN module mTAND($r,s$) as mTAND($r,s)\[i\]$ = mTAN($r_i,s$). 해당 함수는 input으로 reference time points $r$과 time series $s$를 받아 output으로 mTAN embedding의 length $|r|$인 sequence를 만들어낸다. ($\in \mathbb{R}^{J \times K}$)
   
 ![캡쳐3](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/bbb8c51a-ce8d-49bd-aafa-a8f3fb647576)
 
