@@ -75,7 +75,7 @@ $$
   
 ![캡쳐3](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/bbb8c51a-ce8d-49bd-aafa-a8f3fb647576)
 
-- mTAND module의 전체적인 과정은 fig 1에 나타나 있다. $x_1$과 $x_2$는 $x$의 두 변수이고 각 변수에서 만들어진 embedding seqeunce 중 같은 reference time point(=i)에서 만들어진 embedding($\in \mathbb{R}^{J}$)은 linear 층을 통해 $h_i$로 합쳐진다. 즉 여러 변수에 대해 $|r|$의 길이를 갖는 $h=\[h_1,...h_K\]$로 재구성된다.
+- mTAND module의 전체적인 과정은 fig 1에 나타나 있다. $x_1$과 $x_2$는 데이터의 두 cases이고 각 case에서 만들어진 embedding seqeunce 중 같은 reference time point(=i)에서 만들어진 embedding($\in \mathbb{R}^{J}$)은 linear 층을 통해 $h_i$로 합쳐진다. 즉 여러 case에 대해 $|r|$의 길이를 갖는 $h=\[h_1,...h_K\]$로 재구성된다. (여기서는 2개이므로 $\mathbb{R}^{2 \times K}$)
 
   
 # 4. Encoder-Decoder framework
