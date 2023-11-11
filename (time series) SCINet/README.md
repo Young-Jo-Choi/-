@@ -1,6 +1,6 @@
 # SCINet: Time Series Modeling and Forecasting with Sample Convolution and Interaction
 36th Conference on Neural Information Processing Systemp (NeurlPS 2022)<br>
-분야 : Time Series Forcasting (TSF)<br>
+분야 : Time Series Forcasting (TSF) <br>
 논문 : https://arxiv.org/pdf/2106.09305.pdf <br>
 github : https://github.com/cure-lab/SCINet
 
@@ -80,14 +80,43 @@ $L = \Sigma_{k=1}^K L_k$
 
 # 4. Experiments
 ## 4.1 Datasets
+![캡쳐8](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/56414115-e48e-4b8d-870f-0f23264df7ba)
+
+총 11가지의 유명한 데이터셋으로 실험하였고 간단한 description은 table1과 같다. 모든 실험들은 multi-variate TSF setting 하에서 수행되었다. (ETTh1 데이터셋의 경우 어떻게 생겼는지 코드를 첨부해놓음)
 
 ## 4.2 Results and Analyses
+168개의 input length를 사용, $\tau$는 forecast different future horizons. <br>
+TSF 알고리즘에 따른 비교는 다음과 같다.
+
+**Short-term Time Series Forecasting**
+![캡쳐9](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/f149a21a-e1b9-403e-9261-3712e0f28c0b)
+
+**Long-term Time Series Forecasting**
+![캡쳐10](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/0ab61348-929a-436a-8bc6-2301642e8950)
+
+**Multivariate Time-series Forecasting on ETF**
+![캡쳐11](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/07050e92-4b4a-414e-a413-3865f1a03b9e)
+
+다음 Fig 3은 ETTh1 데이터셋에서 랜덤하게 선택된 sequence의 예측 qualitiy를 보여준다. SCINet이 trend와 seasonality를 잘 포함하고 있음을 확인할 수 있다.
+![캡쳐13](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/1ce58dff-583d-4963-a262-15bb5b3184ce)
+
+**Univariate Time-series Forecasting on ETF**
+![캡쳐12](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/49750d84-c44f-4557-9d8e-282d174dc5a1)
+
+**Predictability estimation**
+- permutation entropy (PE)를 사용해, SCINet으로 학습하여 original data의 predictability와 SCINet을 학습함으로써 enhanced된 representation을 측정하였다.
+- 낮은 PE를 갖는 time series는 덜 복잡하고, 이론적으로 예측이 더 쉽다고 여겨진다. 
+![캡쳐14](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/da63bf54-2581-4142-9d46-fbe95a34988f)
+
+SCINet을 학습함으로써 향상된 representation은 original input과 비교해 더 낮은 PE를 갖는 것을 확인 할 수 있고, 이것은 미래를 예측하는게 더 쉬워짐을 의미한다.
 
 ## 4.3 Ablation studies
 생략
 
 # 5. Limitations and Future Work
+- real world 상황에서 데이터에 noise가 섞여있거나 missing data, irregular time interval 문제등이 있을 수 있다. missing value가 일정 threshold를 넘어서거나 irregularly sampled된 데이터에 대해서 활용하기가 어렵다.
+- SCINet은 공간적(spatial) 관계를 명시적으로 모델링하지 않지만 이러한 부분에 대한 보완이 있다면 더 나은 결과를 얻을 수 있을 것으로 기대된다.
 
 # 6. Conclusion
-
+generic sequence 데이터에 비해 time series 데이터가 갖는 독특한 성질로부터 motivated되어, time series modeling과 forecasting에 대한 sample convolution과 interaction network (SCINet)를 제안했다. 제안된 SCINet은 a rich set of convolutional filters을 이용한 계층적인 downsample-convolve-interact structure이다. 이 structure는 반복적으로 다른 시간적 해상도 하에서 정보를 추출하고 교환하면서 enhanced predictability를 갖는 효과적인 representation을 학습하도록 한다. 여러 TSF 데이터셋에 대해 광범위한 실험을 통해 다른 모델들에 비해 SCINet이 우수함을 증명해냈다.
 
