@@ -6,7 +6,7 @@ github : https://github.com/cure-lab/SCINet
 
 
 # Abstract
-- time series 데이터릐 독특한 성질 중 한가지는 temporal relations (시간적 관계)가 두 개의 sub-sequence로 다운샘플링된 후에도 보존된다는 점이다. 
+- time series 데이터의 독특한 성질 중 한가지는 temporal relations (시간적 관계)가 두 개의 sub-sequence로 다운샘플링된 후에도 보존된다는 점이다. 
 - 이러한 이점을 살려 해당 논문은 temporal modeling과 forecasting을 위해 sample convolution과 interaction을 수행하는 novel한 neural network, **SCINet**를 제안했다.
 - SCINet은 recursive한 downsampling-convolve-interact architecture이다.
 - 실험결과들은 SCINet이 convolution 모델들과 transformer-based 모델들에 비해 눈에 띄는 forecasting accuracy improvements를 달성했다.
