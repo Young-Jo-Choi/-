@@ -55,7 +55,7 @@ $$
 
 ## 3.2 SCINet
 - Fig 2(b)에 나오듯 SCINet은 여러 개의 SCI-Block을 계층적으로 구성한다.
-- $l$-th level (where $l=1,...,L$)에는 $2^l$개의 SCI-Blocks가 있다. stacked SCINet의 $k$-th SCINet 안에서 input인 time series $X$ (for $k=1$) 혹은 feature vecotr $\hat{X}^{k-1} = (\hat{x}_1^{k-1},...,\hat{x}_{tau}^{k-1})$ (for $k>1$)는 SCI-Block을 통해 점점 다른 level에서 downsampled and processed되며 이러한 과정으로 effective feature learning of different temporal resolution이 되도록 한다. 특히 이전 level에서의 정보가 점점 accumulated되는데 즉, deep한 level에서의 feature는 shallow level에서 전달받아 추가적인 미세한 scale의 시간적(temporal) 정보를 포함하게 되는 것이다.
+- $l$-th level (where $l=1,...,L$)에는 $2^l$개의 SCI-Blocks가 있다. stacked SCINet의 $k$-th SCINet 안에서 input인 time series $X$ (for $k=1$) 혹은 feature vecotr $\hat{X}^{k-1} = (\hat{x}\_{1}^{k-1},...,\hat{x}\_{\tau}^{k-1})$ (for $k>1$)는 SCI-Block을 통해 점점 다른 level에서 downsampled and processed되며 이러한 과정으로 effective feature learning of different temporal resolution이 되도록 한다. 특히 이전 level에서의 정보가 점점 accumulated되는데 즉, deep한 level에서의 feature는 shallow level에서 전달받아 추가적인 미세한 scale의 시간적(temporal) 정보를 포함하게 되는 것이다.
 - $L$ level의 SCI-Block을 거친 후, odd-even splitting 연산을 뒤집고 하나의 새 sequence representation이 되도록 concatenate하면서 sub-features의 모든 elements를 재배열한다.
 - 재배열된 elements에는 original time series가 residual connection을 통해 더해져 더 enhanced된 predictability를 가진 새 sequence를 생성해낸다.
 - 마지막으로 간단한 fully-connected network가 enhanced sequence representation을 $\hat{X}^k = (\hat{x}_1^k,...,\hat{x}_{tau}^k)$로 decode한다.
@@ -98,6 +98,7 @@ TSF 알고리즘에 따른 비교는 다음과 같다.
 ![캡쳐11](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/07050e92-4b4a-414e-a413-3865f1a03b9e)
 
 다음 Fig 3은 ETTh1 데이터셋에서 랜덤하게 선택된 sequence의 예측 qualitiy를 보여준다. SCINet이 trend와 seasonality를 잘 포함하고 있음을 확인할 수 있다.
+
 ![캡쳐13](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/1ce58dff-583d-4963-a262-15bb5b3184ce)
 
 **Univariate Time-series Forecasting on ETF**
