@@ -91,7 +91,7 @@ $$
 \begin{align} z_k &\sim p(z_k) \\
 h_{RNN}^{dec}&= \text{RNN}^{dec}(z)\\
 h_{TAN}^{dec}&= \text{mTAND}^{dec}(t,h_{RNN}^{dec}) \\
-x_{id}&\sim N(x_{id};f^{dec}(h_{i,TAN}^{dec})\[d], \sigma^2 I \end{align}
+x_{id}&\sim N(x_{id};f^{dec}(h_{i,TAN}^{dec})\[d], \sigma^2 I) \end{align}
 $$
 
 **Encoder**
