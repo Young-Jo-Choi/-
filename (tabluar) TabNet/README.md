@@ -117,6 +117,8 @@ ${(i-1)}^{th}$ step에서 어느 feature를 사용할지 결정하고 processed�
     - normalization with the population standard deviation of the ground truth
 - $S_{b,j}$는 parameter $p_s$를 지닌 Bernoulli 분포로부터 독립적으로 추출된다.
 
+![image](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/8e3e2260-029c-46fc-b5cc-6cb28ee7d957)
+
 # Exprements
 
 - 각 dataset에서 categorical feature는 learnable한 embedding이 있는 1차원 trainable scalar에 mapping되고, numerical column은 전처리 없이 입력된다.
