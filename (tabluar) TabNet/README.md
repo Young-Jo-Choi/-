@@ -161,4 +161,4 @@ ${(i-1)}^{th}$ step에서 어느 feature를 사용할지 결정하고 processed�
 (출처 : https://github.com/dreamquark-ai/tabnet/tree/develop/pytorch_tabnet)
 
 - pretrain에는 encoder, decoder가 모두 쓰이는데 그냥 모델에는 encoder만 쓰인다. 공식홈페이지의 TabNetClassifier는 TabNet class가 사용된다.
-
+- 즉 pretrain으로 encoder, decoder 모두 학습을 하고 이후 supervised learning에서는 encoder만 학습을 하는 형태이다.
