@@ -40,7 +40,7 @@ deep learning은 image나 text, audio 등의 분야에서는 좋은 성능을 �
 
 ![Untitled](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/d720db4f-5ccc-4295-9177-739c56d69ebd)
 
-conventional DNN에서는 Fig. 3과 같이 DT와 같이 output manifold가 구성되도록 동작한다. 이런 디자인에서 각각의 feature selection은 hyperplane form에서의 decision boundaries를 얻는데 중요한 부분이며 coefficients가 각 feature의 proportion을 결정하는 결정하는 형태로 각 feature의 linear한 combination에 의해 이뤄진다. 
+conventional DNN에서는 Fig. 3과 같이 DT와 같이 output manifold가 구성되도록 동작한다. 이런 디자인에서 각각의 feature selection은 hyperplane form에서의 decision boundaries를 얻는데 중요한 부분이며 coefficients가 각 feature의 proportion을 결정하는 형태로 각 feature의 linear한 combination에 의해 이뤄진다. 
 
 TabNet은 이러한 기능을 기반으로 하여 조금 더 세심한 설계를 통해 DT보다 뛰어난 성능을 발휘한다.
 
@@ -147,3 +147,18 @@ ${(i-1)}^{th}$ step에서 어느 feature를 사용할지 결정하고 processed�
 - 해당 논문은 tabular data를 위한 deep learning인 TabNet을 제안하였다.
 - TabNet은 sequential한 attention을 사용하여 각 decision step에서 의미있는 subset만을 선택하도록 하였다. Instance-wise한 feature selection을 통해 model capacity가 salient features에 충분히 사용되는 효율적인 learning이 가능하게 하였다. 또한 seleciton mask의 시각화를 통해 해석력을 더욱 높였다.
 - TabNet이 다른 모델들에 비해 여러 도메인에 걸쳐 성능이 제일 좋다는 것을 보였으며 unspuervised pre-training을 통해 성능이 상승하는 효과를 보았다.
+
+
+# (추가)
+실제 training 과정에 decoder가 관여하는지
+
+![image](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/180414f5-7576-41f8-9892-218e1dd0af42)
+(출처 : pytorch_tabnet 공식 홈페이지 : https://dreamquark-ai.github.io/tabnet/generated_docs/README.html#how-to-use-it)
+
+- 보면 pretrain 이후에 fit하는 것을 확인할 수 있다.
+  
+![image](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/d30291e1-6cee-443d-afe4-305871db9842)
+(출처 : https://github.com/dreamquark-ai/tabnet/tree/develop/pytorch_tabnet)
+
+- pretrain에는 encoder, decoder가 모두 쓰이는데 그냥 모델에는 encoder만 쓰인다. 공식홈페이지의 TabNetClassifier는 TabNet class가 사용된다.
+
