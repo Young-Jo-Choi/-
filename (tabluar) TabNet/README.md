@@ -128,7 +128,7 @@ ${(i-1)}^{th}$ step에서 어느 feature를 사용할지 결정하고 processed�
 
 ![Untitled 2](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/eb6726f0-f4c9-4274-b3f7-b55cbe8dcd04)
 
-6개의 synthetic dataset에 대한 비교인데 Syn1~Syn3는 salient feature가 모든 instance에서 동일하며 salient feature를 global로 선택하면 높은 성능을 얻을 수 있다. Syn4~Syn6은 salient feature가 instance에 따라 달라지므로 global한 feauture selection은 최적이 아니게 된다. 
+6개의 synthetic dataset에 대한 비교인데 Syn1\~Syn3는 salient feature가 모든 instance에서 동일하며 salient feature를 global로 선택하면 높은 성능을 얻을 수 있다. Syn4\~Syn6은 salient feature가 instance에 따라 달라지므로 global한 feauture selection은 최적이 아니게 된다. 
 
 (시각화)
 
