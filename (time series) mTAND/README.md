@@ -142,3 +142,7 @@ Datasets은 PhysioNet, MIMIC-III, human activity 이 세가지를 사용했으�
 ![캡쳐5](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/47f98fc9-166c-4aeb-bba8-6ed9a45f8498)
 
 ![캡쳐6](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/3ec3e71f-27ae-4a48-8b9d-db13c0c04bd1)
+
+
+![image](https://github.com/Young-Jo-Choi/paper_study/assets/59189961/f66ddf0c-7ef6-4345-8181-3808fef9aded)
+
