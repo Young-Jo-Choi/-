@@ -49,6 +49,7 @@ $$\phi_h(t)[i]  = \begin{cases}
 
 - $\omega\_{ih}$와 $\alpha_{ih}$는 learnable parameters이다.
 - The periodic terms can capture periodicity in time series data.
+  - 시간 값을 고차원 공간데 매핑하는 것을 학습하는 것인데 transformer에서의 positional encoding은 이산적인 위치에 대해서만 정의된다. 해당 time embedding함수는 이산 위치에서의 positional encoding을 포함한다. 
 - The linear term can capture non-periodic patterns dependent on the progression of time.
 
 **Multi-Time Attention**
