@@ -48,6 +48,8 @@ $$\phi_h(t)[i]  = \begin{cases}
 
 
 - $\omega\_{ih}$와 $\alpha_{ih}$는 learnable parameters이다.
+- The periodic terms can capture periodicity in time series data.
+- The linear term can capture non-periodic patterns dependent on the progression of time.
 
 **Multi-Time Attention**
 - 위의 time embdding은 연속적인 time point를 받아 $H$개의 다른 $d_r$ dimension space로 embedding한다. 이 section에서는 어떻게 time embedding을 이용해 irregularly sampled되고 sparse한 time series 데이터를 처리하는지 다룬다.
