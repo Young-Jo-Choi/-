@@ -113,7 +113,7 @@ $$
 
 **Unsupervised Learning**
 
-- we follow a slightly modified VAE training approach and maximize a normalized variational lower bound on the log marginal likelihood based on the evidence lower bound or ELBO. (VAE를 잘 모르는 관계로 해당 부분은 패스)
+- We follow a slightly modified VAE training approach and maximize a normalized variational lower bound on the log marginal likelihood based on the evidence lower bound or ELBO.
 - $\text{log}p_\theta(x_n|z,t_n)$는 어떤 case $n$에 대해 latent state $z$로부터 모든 feature의 모든 실제 관측된 값들을 가질 log likelihood function을 더한 것
 - $D_{KL}(q_\gamma(z|r,s_n)||p(z))$은 모든 reference time points에 대해 $z$의 이론상 distribution과 실제 $z$의 distibution의 차이를 의미
 - $\mathcal{L}\_{NVAE}(\theta, \gamma)$는 모든 case에 대해 두 값의 차이를 길이만큼 나누어 준 뒤 더한 것임
