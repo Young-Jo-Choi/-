@@ -107,7 +107,7 @@ $$
 \begin{align} 
 h_{TAN}^{enc} &= \text{mTAND}^{enc}(r,s)\\
 h_{RNN}^{enc} &=\text{RNN}^{enc}(h_{TAN}^{enc}) \\
-z_k \sim q_\gamma(z_k|\mu_k,{\sigma}^2_k), ~~~ \mu_k &= f_{\mu}^{enc}(h_{k,RNN}^enc), ~~~  {\sigma}^2_k =\text{exp}(f_\sigma^{enc}(h_{k,RNN}^{enc}))
+z_k \sim q_\gamma(z_k|\mu_k,{\sigma}^2_k), ~~~ \mu_k &= f_{\mu}^{enc}(h_{k,RNN}^{enc}), ~~~  {\sigma}^2_k =\text{exp}(f_\sigma^{enc}(h_{k,RNN}^{enc}))
 \end{align} 
 $$
 
