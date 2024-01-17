@@ -33,7 +33,7 @@ healthcare, climate science, ecology, astronomy, biology 등 다양한 도메인
 
 **Notation**
 
-- $D =$ { $(s_n, y_n)|n=1,...,N$ }는 시계열 데이터를 나타내는데 전체 cases의 수 (의료데이터의 경우 환자수)를 의미한다. $s_i$는 하나의 case에 대응하며 $D$개의 dimension를 갖고 $y_i$는 single target value이다. 여기서 dimension는 논문 내에서 feature와 비슷한 의미로 쓰인다.
+- $\mathcal{D} =$ { $(s_n, y_n)|n=1,...,N$ }는 시계열 데이터를 나타내는데 전체 cases의 수 (의료데이터의 경우 환자수)를 의미한다. $s_i$는 하나의 case에 대응하며 $D$개의 dimension를 갖고 $y_i$는 single target value이다. 여기서 dimension는 논문 내에서 feature와 비슷한 의미로 쓰인다.
 - case에 따라 또 dimension $d$에 따라 다른 시간대에서 observation이 보이기도 하며 관측된 개수 역시 다를 수 있다. n번째 case가 d번째 feature에 관측값으로 갖고 있는 것들의 길이를 $L_{dn}$으로 나타낸다.
 - time series $d$ for data case $n$은 튜플 $s_{dn}=(t_{dn},x_{dn})$으로 나타내며 $t_{dn} = \[t_{1dn},...t_{L_{dn}dn}]$, $x_{dn} = \[x_{1dn},...x_{L_{dn}dn}]$이다. 여기서 $t$는 시간, $x$는 그 시간대에 대응하는 데이터라고 생각하면 된다.
 
